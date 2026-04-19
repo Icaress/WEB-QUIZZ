@@ -15,15 +15,15 @@
 
 <body>
     <div class="text-center m-3 p-4 rounded-5" id="desc">
-        <div class="d-inline-block px-5 rounded-5" style="background-color: #EADDFF; height: 30px;">
-            <h5>Informatique & Tech</h5>
+        <div class="d-inline-block px-5 rounded-5">
+            <p>Informatique & Tech</p>
         </div>
-        <br><br>
-        <h3>Teste tes connaissances </h3>
+        <br>
+        <p class="p1">Teste tes connaissances </p>
         <br>
         <p>Des questions sur le web, les bases de données, les algorithmes et plus encore.</p>
         <br>
-        <button type="submit" class="btn px-5 rounded-4">Commencer le quiz</button>
+        <button type="submit" class="btn">Commencer le quiz</button>
     </div>
 </body>
 

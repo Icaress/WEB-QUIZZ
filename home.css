@@ -1,5 +1,6 @@
 .container-fluid {
     padding-inline: 0;
+    min-width: 387px;
 }
 
 .navbar {
@@ -32,6 +33,20 @@ nav div button {
 body #desc button {
     color: white;
     background: #595959;
+    border-radius: 15px;
+    padding: 15px 55px;
+}
+
+body div div.d-inline-block {
+    background-color: #EADDFF; 
+    height: fit-content;
+    width: 30%;
+    min-width: 221px;
+    font-size: large;
+}
+
+body div .p1 {
+    font-size: xx-large;
 }
 
 @media (max-width: 992px) {
