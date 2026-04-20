@@ -42,3 +42,13 @@ nav div button {
         transform: scale(1.26);
     }
 }
+
+.navbar-nav .nav-link {
+    border-radius: 15px; 
+    transition: background-color 0.2s ease;
+}
+
+.navbar-nav .nav-link:hover {
+    background-color: #D9D9D9 !important;
+    color: black !important;
+}
