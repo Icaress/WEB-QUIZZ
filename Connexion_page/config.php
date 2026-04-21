@@ -3,7 +3,7 @@
 //CE CODE EST A IMPORTER DANS LE PHP DE CHAQUE PAGE AFIN DE SE CONNECTER A LA BASE DE DONNEES
 
 $host = "localhost"; // Adresse du serveur de base de données
-$dbname = "web-quizz"; // Nom de la base de données
+$dbname = "web_quizz"; // Nom de la base de données
 $user = "root"; // Nom d'utilisateur de la base de données
 $pass = "root"; // Mot de passe de la base de données
 
