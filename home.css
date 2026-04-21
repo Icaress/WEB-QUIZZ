@@ -48,7 +48,7 @@ body div .p1 {
 }
 .info div {
     background-color: #D9D9D9;
-    padding: 1%;
+    padding: 3%;
     border-radius: 50px;
     width: 442px;
     height: 220px;
@@ -74,12 +74,12 @@ body div .p1 {
 
     .info div{
         align-content: center;
-        padding: 4%;
+        padding-top: 3%;
         border-radius: 50px;
     }
 }
 
-@media (max-width: 644px) {
+@media (max-width: 668px) {
     .info {
         justify-self: center;
         padding: 18px;

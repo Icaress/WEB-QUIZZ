@@ -27,6 +27,7 @@ footer{
     grid-template-columns: 0.6fr 2fr;
     gap: 5%;
     padding-bottom: 5%;
+    margin-top: 18px;
 }
 #footer-right {
     display: flex;
