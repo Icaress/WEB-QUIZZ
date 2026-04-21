@@ -9,19 +9,19 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
     <script src='show.js'></script>
-    <link rel="stylesheet" href="navbar.css">
+    <script src='Début_accueil.js'></script>
+    <link rel="stylesheet" href="../navbar/navbar.css">
     <link rel="stylesheet" href="Accueil.css">
-    <link rel="stylesheet" href="footer/footer.css">
+    <link rel="stylesheet" href="../footer/footer.css">
     <link rel="stylesheet" href="QUIZZ.css">
     <link rel="stylesheet" href="Historique.css">
 </head>
 
 <header>
-    <?php include "navbar.html" ?>
+    <?php include "../navbar/navbar.html" ?>
 </header>
 
 <body>
-
     <section class='section' id='Accueil'>
          <div class="text-center m-3 p-4 rounded-5" id="desc">
             <div class="d-inline-block px-5 rounded-4">
@@ -56,7 +56,7 @@
 </body>
 
 <footer>
-    <?php include "footer/footer.html" ?>
+    <?php include "../footer/footer.html" ?>
 </footer>
 
 </html>
