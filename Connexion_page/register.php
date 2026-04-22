@@ -1,3 +1,39 @@
+<?php
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+require_once "../Configuration/config.php";
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    
+    $email = trim($_POST['email']);
+    $Nom = trim($_POST['Nom']);
+    $Prenom = trim($_POST['Prenom']);
+    $mdp = $_POST['mdp'];
+    $perm = 0;
+
+    $check = $db->prepare("SELECT * FROM users WHERE email = ?");
+    $check->execute([$email]);
+    $exists = $check->fetch(PDO::FETCH_ASSOC);
+
+    if ($exists) {
+        echo "Email déjà utilisé";
+    } else {
+        $hash = password_hash($mdp, PASSWORD_BCRYPT);
+        try {
+            $stmt = $db->prepare("INSERT INTO users (email, Nom, Prénom, mdp, perm) VALUES (?, ?, ?, ?, ?)");
+            $stmt->execute([$email, $Nom, $Prenom, $hash, $perm]);
+            header("Location: login.php");
+            exit();
+        }
+         catch (PDOException $e) {
+            echo "Erreur : " . $e->getMessage();
+        }
+    }
+}
+
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -30,7 +66,7 @@
             <h2 class="fw-bold mb-2">Inscription</h2>
             <p class="text-white-50 mb-4">Crée ton compte WebQuizz dès maintenant</p>
 
-            <form action="inscription_traitement.php" method="POST">
+            <form action="register.php" method="POST">
             
                 <div class="row" style="margin-bottom: 0% !important;">
                     <div class="col-md-6 mb-3 text-start">
@@ -51,7 +87,7 @@
 
                 <div class="mb-3 text-start">
                     <label class="form-label big">Mot de passe</label>
-                    <input type="password" name="password" class="form-control bg-dark text-white border-secondary" placeholder="Mot de passe" style="padding: 0.8rem;" required>
+                    <input type="password" name="mdp" class="form-control bg-dark text-white border-secondary" placeholder="Mot de passe" style="padding: 0.8rem;" required>
                 </div>
             
 

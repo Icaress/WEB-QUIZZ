@@ -5,6 +5,7 @@ require_once "../Configuration/config.php";
 if (isset($_POST['email']) && isset($_POST['mdp'])) {
     $email = $_POST['email'];
     $password = $_POST['mdp'];
+    $perm = 0;
 
 $query = $db->prepare("SELECT * FROM users WHERE email = :email");
 
@@ -14,6 +15,9 @@ $user = $query->fetch(PDO::FETCH_ASSOC);
 
 if ($user && password_verify($password, $user['mdp'])) {
     $_SESSION['id'] = $user['user_id'];
+    $_SESSION['Nom'] = $user['Nom'];
+    $_SESSION['Prénom'] = $user['Prénom'];
+    $_SESSION['perm'] = $user['perm'];
     header("Location: ../Page_accueil/home.php");
     exit();
 } else {
