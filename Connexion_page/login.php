@@ -1,20 +1,20 @@
 <?php
 session_start();
-require_once "config.php";
+require_once "../Configuration/config.php";
 
-if (isset($_POST['pseudo']) && isset($_POST['mdp'])) {
-    $pseudo = $_POST['pseudo'];
+if (isset($_POST['email']) && isset($_POST['mdp'])) {
+    $email = $_POST['email'];
     $password = $_POST['mdp'];
 
-$query = $db->prepare("SELECT * FROM users WHERE pseudo = :pseudo");
+$query = $db->prepare("SELECT * FROM users WHERE email = :email");
 
-$query->execute(['pseudo' => $pseudo]);
+$query->execute(['email' => $email]);
 
 $user = $query->fetch(PDO::FETCH_ASSOC);
 
 if ($user && password_verify($password, $user['mdp'])) {
     $_SESSION['id'] = $user['user_id'];
-    header("Location: home.php");
+    header("Location: ../Page_accueil/home.php");
     exit();
 } else {
     echo "Nom d'utilisateur ou mot de passe incorrect.";
@@ -30,7 +30,9 @@ if ($user && password_verify($password, $user['mdp'])) {
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.min.js" integrity="sha384-G/EV+4j2dNv+tEPo3++6LCgdCROaejBqfUeNjuKAiuXbjrxilcCdDz6ZAVfHWe1Y" crossorigin="anonymous"></script>
-    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="../navbar/navbar.css">
+    <title>Se connecter</title>
 </head>
 <style>
     <?php include "home.css"; ?>
@@ -50,22 +52,22 @@ if ($user && password_verify($password, $user['mdp'])) {
                 <div class="card bg-dark text-white shadow-lg p-4" style="border-radius: 2rem;">
                     <div class="card-body text-center">
                     
-                        <div class="mb-5" style="display: flex; justify-content: center;">
+                        <div class="mb-3" style="display: flex; justify-content: center;">
                             <img src="../Image/avatar.png" alt="Logo" width="120" height="120" class="d-inline-block align-top" style="margin-bottom: 0%;">
                         </div>
 
                         <h2 class="fw-bold mb-2">Connexion</h2>
                         <p class="text-white-50 mb-4">Accède à ton compte WebQuizz</p>
 
-                        <form action="traitement.php" method="POST">
+                        <form action="login.php" method="POST">
                             <div class="mb-3 text-start w-70">
-                                <label class="form-label small">Nom d'utilisateur</label>
-                                <input type="text" name="pseudo" class="form-control bg-dark text-white border-secondary" placeholder="Ex : alex123" style="padding: 0.8rem;">
+                                <label class="form-label big">Email</label>
+                                <input type="text" name="email" class="form-control bg-dark text-white border-secondary" placeholder="Ex : WebQuizz@gmail.com" style="padding: 0.8rem;">
                             </div>
 
                             <div class="mb-1 text-start w-70">
-                                <label class="form-label small">Mot de passe</label>
-                                <input type="password" name="password" class="form-control bg-dark text-white border-secondary" placeholder="•••••••••••••" style="padding: 0.8rem;">
+                                <label class="form-label big">Mot de passe</label>
+                                <input type="password" name="mdp" class="form-control bg-dark text-white border-secondary" placeholder="Mot de passe" style="padding: 0.8rem;">
                             </div>
                         
                             <div class="text-end mb-4 pt-3">
@@ -90,7 +92,4 @@ if ($user && password_verify($password, $user['mdp'])) {
         </div>
     </div>
 </body>
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-
 </html>

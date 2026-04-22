@@ -8,8 +8,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
-    <script src='show.js'></script>
-    <script src='Début_accueil.js'></script>
+    <script src='../Fonction/show.js'></script>
+    <script src='Debut_accueil.js'></script>
     <link rel="stylesheet" href="../navbar/navbar.css">
     <link rel="stylesheet" href="Accueil.css">
     <link rel="stylesheet" href="../footer/footer.css">
@@ -45,12 +45,18 @@
             <p class="p1">Choix de la catégorie du QUIZZ </p>
             <p class="sous_texte">Choisir une catégorie te permet de jouer dans le domaine qui t'intéresse le plus, que ce soit le JavaScript, les bases de données ou les algorithmes. Comme ça tu progresses là où tu en as vraiment besoin, à ton rythme.</p>
             <button type="submit" class="btn">Commencer le quiz</button>
+            <section id='section_quizz'>
+
+            </section>
         </div>
     </section>
     <section class='section' id='Historique'>
         <div id="titre_histo">
             <h1>Historique</h1>
             <p>Tous les Quizz joués</p>
+            <div id='historique'>
+                
+            </div>
         </div>
     </section>
 </body>
