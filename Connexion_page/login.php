@@ -7,22 +7,22 @@ if (isset($_POST['email']) && isset($_POST['mdp'])) {
     $password = $_POST['mdp'];
     $perm = 0;
 
-$query = $db->prepare("SELECT * FROM users WHERE email = :email");
+    $query = $db->prepare("SELECT * FROM utilisateurs WHERE email = :email");
 
-$query->execute(['email' => $email]);
+    $query->execute(['email' => $email]);
 
-$user = $query->fetch(PDO::FETCH_ASSOC);
+    $user = $query->fetch(PDO::FETCH_ASSOC);
 
-if ($user && password_verify($password, $user['mdp'])) {
-    $_SESSION['id'] = $user['user_id'];
-    $_SESSION['Nom'] = $user['Nom'];
-    $_SESSION['Prénom'] = $user['Prénom'];
-    $_SESSION['perm'] = $user['perm'];
-    header("Location: ../Page_accueil/home.php");
-    exit();
-} else {
-    echo "Nom d'utilisateur ou mot de passe incorrect.";
-}
+    if ($user && password_verify($password, $user['mot_de_passe'])) {
+        $_SESSION['id'] = $user['id'];
+        $_SESSION['nom'] = $user['nom'];
+        $_SESSION['prenom'] = $user['prenom'];
+        $_SESSION['role'] = $user['role'];
+        header("Location: ../Page_accueil/Accueil.php");
+        exit();
+    } else {
+        echo "Nom d'utilisateur ou mot de passe incorrect.";
+    }
 }
 ?>
 
@@ -38,15 +38,17 @@ if ($user && password_verify($password, $user['mdp'])) {
     <link rel="stylesheet" href="../navbar/navbar.css">
     <title>Se connecter</title>
 </head>
+
 <style>
-    <?php include "home.css"; ?>
     ::placeholder {
     color: rgba(255, 255, 255, 0.5) !important; 
 }
 </style>
+
 <header>
-    <?php include "../navbar/navbar.html" ?>
+    <?php include "../navbar/navbar.php" ?>
 </header>
+
 <body class="bg-light"> 
     <div class="container">
         <div class="row vh-100 justify-content-center align-items-center">

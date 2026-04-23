@@ -22,10 +22,6 @@ body div div.d-inline-block {
     font-size: large;
 }
 
-body div .p1 {
-    font-size: xx-large;
-}
-
 @media (max-width:1100px) {
     body div div.d-inline-block{
         border-radius: 30px !important;
@@ -109,4 +105,12 @@ body div .p1 {
 
 .section{
     display: none;
+}
+
+#Accueil div .classement{
+    font-size: 65px;
+}
+
+#Accueil div #classement {
+    font-size: 25px;
 }
