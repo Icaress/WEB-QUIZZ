@@ -19,15 +19,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         echo "Email déjà utilisé";
     } else {
         $hash = password_hash($mdp, PASSWORD_BCRYPT);
-        try {
-            $stmt = $db->prepare("INSERT INTO users (email, Nom, Prénom, mdp, perm) VALUES (?, ?, ?, ?, ?)");
-            $stmt->execute([$email, $Nom, $Prenom, $hash, $perm]);
-            header("Location: login.php");
-            exit();
-        }
-         catch (PDOException $e) {
-            echo "Erreur : " . $e->getMessage();
-        }
+    
+        $stmt = $db->prepare("INSERT INTO users (email, Nom, Prénom, mdp, perm) VALUES (?, ?, ?, ?, ?)");
+        $stmt->execute([$email, $Nom, $Prenom, $hash, $perm]);
+        header("Location: login.php");
+        exit();
     }
 }
 
