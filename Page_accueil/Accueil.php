@@ -1,3 +1,9 @@
+<?php 
+
+session_start();
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -18,10 +24,11 @@
 </head>
 
 <header>
-    <?php include "../navbar/navbar.html" ?>
+    <?php include "../navbar/navbar.php" ?>
 </header>
 
 <body>
+    <?php // Acceuil ?>
     <section class='section' id='Accueil'>
         <div class="text-center m-3 p-4 rounded-5" id="desc">
             <div class="d-inline-block px-5 rounded-4">
@@ -32,15 +39,26 @@
                 <button onclick="show('QUIZZ')" class="btn">Commencer le quiz</button>
         </div>
 
-        <div class="info">
-            <div> <p class="big">240</p> <p>questions</p> </div>
-            <div> <p class="big">1.2k</p> <p>Joueurs</p> </div>
-            <div> <p class="big">8</p> <p>Catégories</p> </div>
+            <div class="info">
+                <div> <p class="big">240</p> <p>questions</p> </div>
+                <div> <p class="big">1.2k</p> <p>Joueurs</p> </div>
+                <div> <p class="big">8</p> <p>Catégories</p> </div>
+            </div>
+
+            <div class="row justify-content-center align-items-center my-5 w-100">
+                <p class="classement text-center">🏆 Classement</p>
+                <div class="bg-dark text-white p-3 m-0" id="classement">
+                    <p class="d-flex justify-content-between">
+                        1 &emsp; Alex L. 
+                        <span>9 840 pts</span>
+                    </p>
+                </div>
+            </div>
+
         </div>
-
-        <p id='Classement'>🏆 Classement</p>
-
     </section>
+
+    <?php // Quizz ?>
     <section class='section' id='QUIZZ'>
         <div class="text-center m-3 p-4 rounded-5" id="desc">
             <br>
@@ -52,6 +70,8 @@
             </section>
         </div>
     </section>
+
+    <?php // Historique ?>
     <section class='section' id='Historique'>
         <div id="titre_histo">
             <h1>Historique</h1>

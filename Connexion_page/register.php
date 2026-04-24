@@ -9,21 +9,68 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $Nom = trim($_POST['Nom']);
     $Prenom = trim($_POST['Prenom']);
     $mdp = $_POST['mdp'];
+    $confirm_mdp = $_POST['confirm_mdp'];
     $perm = 0;
 
-    $check = $db->prepare("SELECT * FROM users WHERE email = ?");
+    $check = $db->prepare("SELECT * FROM utilisateurs WHERE email = ?");
     $check->execute([$email]);
     $exists = $check->fetch(PDO::FETCH_ASSOC);
 
     if ($exists) {
-        echo "Email déjà utilisé";
+        echo "Email déjà utilisé<br>";
     } else {
-        $hash = password_hash($mdp, PASSWORD_BCRYPT);
-    
-        $stmt = $db->prepare("INSERT INTO users (email, Nom, Prénom, mdp, perm) VALUES (?, ?, ?, ?, ?)");
-        $stmt->execute([$email, $Nom, $Prenom, $hash, $perm]);
-        header("Location: login.php");
-        exit();
+
+        $wrong = "";
+
+        /*good email or not*/
+        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            $wrong = "• Wrong email ! <br>";
+        }
+        
+        /*rule_length*/ 
+        if (strlen($mdp) < 12){
+            $wrong .= "• The password needs to have at least 12 characters ! <br>";
+        }
+
+        /*rule_number*/
+        if(!preg_match('/\d/',$mdp)){
+            $wrong .= "• The password doesn't have a number ! <br>";
+        }
+
+        /*rule_uppercase*/
+        if(!preg_match('/[A-Z]/',$mdp)){
+            $wrong .= "• The password doesn't have an uppercase letter ! <br>";
+        }
+
+        /*rule_symbol*/
+        if(!preg_match('/[&?#\/*%]/',$mdp)){
+            $wrong .= "• The password doesn't have any of the required symbols : &emsp; & ? # \ / * % <br>";
+        }
+
+        /*comfirm*/
+        if($mdp !== $confirm_mdp){
+            $wrong .= "• The password confirmation is not the same as the password ! <br>";
+        }
+        
+        if($wrong == ""){
+            $hash = password_hash($mdp, PASSWORD_BCRYPT);
+            try {
+                $stmt = $db->prepare("INSERT INTO utilisateurs (email, nom, prenom, mot_de_passe, role) VALUES (?, ?, ?, ?, ?)");
+                $stmt->execute([$email, $Nom, $Prenom, $hash, $perm]);
+                header("Location: login.php");
+                exit();
+            }
+            catch (PDOException $e) {
+                echo "Erreur : " . $e->getMessage();
+            }
+        }
+        else {
+            echo "
+                    <div class='bg-secondary-subtle text-danger p-4 m-0'>
+                        <h3>Your errors :</h3>
+                        <p class='ms-4'>$wrong</p>
+                    </div>";
+        }
     }
 }
 
@@ -49,7 +96,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 </style>
 
 <header>
-    <?php include "../navbar/navbar.html"; ?>
+    <?php include "../navbar/navbar.php"; ?>
 </header>
 
 <body>
@@ -84,6 +131,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <div class="mb-3 text-start">
                     <label class="form-label big">Mot de passe</label>
                     <input type="password" name="mdp" class="form-control bg-dark text-white border-secondary" placeholder="Mot de passe" style="padding: 0.8rem;" required>
+                </div>
+
+                <div class="mb-3 text-start">
+                    <label class="form-label big">Mot de passe</label>
+                    <input type="password" name="confirm_mdp" class="form-control bg-dark text-white border-secondary" placeholder="Confirmez le mot de passe" style="padding: 0.8rem;" required>
                 </div>
             
 
