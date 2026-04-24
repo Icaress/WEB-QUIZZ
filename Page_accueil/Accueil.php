@@ -30,15 +30,14 @@ session_start();
 <body>
     <?php // Acceuil ?>
     <section class='section' id='Accueil'>
-        <div class="container">
-            <div class="text-center m-3 p-4 rounded-5" id="desc">
-                <div class="d-inline-block px-5 rounded-4">
-                    <p>Informatique & Tech</p>
-                </div>
-                    <p class="p1">Teste tes connaissances </p>
-                    <p class="sous_texte">Des questions sur le web, les bases de données, les algorithmes et plus encore.</p>
-                    <button onclick="show('QUIZZ')" class="btn">Commencer le quiz</button>
+        <div class="text-center m-3 p-4 rounded-5" id="desc">
+            <div class="d-inline-block px-5 rounded-4">
+                <p>Informatique & Tech</p>
             </div>
+                <p class="p1">Teste tes connaissances </p>
+                <p class="sous_texte">Des questions sur le web, les bases de données, les algorithmes et plus encore.</p>
+                <button onclick="show('QUIZZ')" class="btn">Commencer le quiz</button>
+        </div>
 
             <div class="info">
                 <div> <p class="big">240</p> <p>questions</p> </div>
