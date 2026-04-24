@@ -23,7 +23,7 @@
 
 <body>
     <section class='section' id='Accueil'>
-         <div class="text-center m-3 p-4 rounded-5" id="desc">
+        <div class="text-center m-3 p-4 rounded-5" id="desc">
             <div class="d-inline-block px-5 rounded-4">
                 <p>Informatique & Tech</p>
             </div>
