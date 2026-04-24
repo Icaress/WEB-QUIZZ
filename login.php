@@ -49,13 +49,13 @@ if ($user && password_verify($password, $user['mdp'])) {
             <div class="card bg-dark text-white shadow-lg p-4" style="border-radius: 2rem;">
                 <div class="card-body text-center">
                     
-                    <div class="mb-5">
+                    <div class="mx-auto pb-5">
                         <div class="bg-dark d-inline-block p-3 rounded-circle" style="width: 80px; height: 100px;">
-                             <img src="Image/avatar.png" alt="Logo" width="120" height="130" class="d-inline-block align-top me-2 rounded pt-2">
+                             <img src="Image/avatar.png" alt="Logo" width="120" height="120" class="d-inline-block align-top me-2 rounded pt-1">
                         </div>
                     </div>
 
-                    <h2 class="fw-bold mb-2">Connexion</h2>
+                    <h2 class="fw-bold mb-2 pt-5">Connexion</h2>
                     <p class="text-white-50 mb-4">Accède à ton compte WebQuizz</p>
 
                     <form action="traitement.php" method="POST">
