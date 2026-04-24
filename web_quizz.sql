@@ -50,7 +50,7 @@ CREATE TABLE `questions` (
   `reponse3` varchar(50) NOT NULL,
   `reponse4` varchar(50) NOT NULL,
   `bonne_reponse` int(11) NOT NULL,
-  `catégirie` int(11) NOT NULL
+  `catégorie` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
