@@ -134,7 +134,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 </div>
 
                 <div class="mb-3 text-start">
-                    <label class="form-label big">Mot de passe</label>
+                    <label class="form-label big">Confirmer votre Mot de passe</label>
                     <input type="password" name="confirm_mdp" class="form-control bg-dark text-white border-secondary" placeholder="Confirmez le mot de passe" style="padding: 0.8rem;" required>
                 </div>
             
