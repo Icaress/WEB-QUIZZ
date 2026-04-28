@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le : ven. 24 avr. 2026 à 16:25
+-- Généré le : mar. 28 avr. 2026 à 03:15
 -- Version du serveur : 10.4.32-MariaDB
 -- Version de PHP : 8.2.12
 
@@ -11,10 +11,10 @@ SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
 SET time_zone = "+00:00";
 
-DROP DATABASE IF EXISTS web-quizz;
 DROP DATABASE IF EXISTS web_quizz;
 CREATE DATABASE web_quizz;
 USE web_quizz;
+
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -51,6 +51,27 @@ CREATE TABLE `questions` (
   `reponse4` varchar(50) NOT NULL,
   `bonne_reponse` int(11) NOT NULL,
   `catégorie` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `questions_en_cours`
+--
+
+CREATE TABLE `questions_en_cours` (
+  `id` int(11) NOT NULL,
+  `tentative_id` int(1) NOT NULL,
+  `id_1` int(1) NOT NULL,
+  `id_2` int(1) NOT NULL,
+  `id_3` int(1) NOT NULL,
+  `id_4` int(1) NOT NULL,
+  `id_5` int(1) NOT NULL,
+  `id_6` int(1) NOT NULL,
+  `id_7` int(1) NOT NULL,
+  `id_8` int(1) NOT NULL,
+  `id_9` int(1) NOT NULL,
+  `id_10` int(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -96,13 +117,6 @@ CREATE TABLE `utilisateurs` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Déchargement des données de la table `utilisateurs`
---
-
-INSERT INTO `utilisateurs` (`id`, `nom`, `prenom`, `email`, `mot_de_passe`, `role`) VALUES
-(2, 'RAKOTOARIVELO', 'Benjatiana', 'hrakotoarivelo75@gmail.com', '$2y$10$g5n6/zF1QNwzKIZmrvH0R.0Nz9dsSFrm1Pq2mvxKZ7itysdxy2vL6', 0);
-
---
 -- Index pour les tables déchargées
 --
 
@@ -116,6 +130,12 @@ ALTER TABLE `catégorie`
 -- Index pour la table `questions`
 --
 ALTER TABLE `questions`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Index pour la table `questions_en_cours`
+--
+ALTER TABLE `questions_en_cours`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -150,6 +170,12 @@ ALTER TABLE `catégorie`
 -- AUTO_INCREMENT pour la table `questions`
 --
 ALTER TABLE `questions`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT pour la table `questions_en_cours`
+--
+ALTER TABLE `questions_en_cours`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
