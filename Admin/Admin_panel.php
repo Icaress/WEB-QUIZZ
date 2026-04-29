@@ -1,6 +1,8 @@
 <?php
 session_start();
 require_once "../Configuration/config.php";
+//require_once '../Configuration/Perm_verif.php';
+
 
 $nb_users    = $db->query("SELECT COUNT(*) as total FROM utilisateurs")->fetch(PDO::FETCH_ASSOC)['total'];
 $nb_questions = $db->query("SELECT COUNT(*) as total FROM questions")->fetch(PDO::FETCH_ASSOC)['total'];
@@ -53,17 +55,17 @@ $nb_categories = $db->query("SELECT COUNT(*) as total FROM catégorie")->fetch(P
             </a>
             <a href="" class="action-card">
                 <div class="action-icon amber">☰</div>
-                <div class="title">Voir toutes les questions</div>
-                <div class="desc">Toutes les questions</div>
+                <div class="title">Voir tout</div>
+                <div class="desc">Voir toutes les catégories et les questions de celle-ci</div>
             </a>
             <a href="Create_categorie.php" class="action-card">
                 <div class="action-icon blue">+</div>
                 <div class="title">Crée une catégorie</div>
                 <div class="desc">Donne vie a une nouvelle catégorie</div>
             </a>
-            <a href="" class="action-card">
+            <a href="Modifier_categorie.php" class="action-card">
                 <div class="action-icon green">✎</div>
-                <div class="title">Modifier le nom d'un catégorie</div>
+                <div class="title">Modifier le nom d'une catégorie</div>
                 <div class="desc">Modifier ou supprimer une catégorie</div>
             </a>
         </div>
