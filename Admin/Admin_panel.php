@@ -48,15 +48,10 @@ $nb_categories = $db->query("SELECT COUNT(*) as total FROM catégorie")->fetch(P
                 <div class="title">Ajouter une question</div>
                 <div class="desc">Rempli les données de ta question</div>
             </a>
-            <a href="" class="action-card">
-                <div class="action-icon green">✎</div>
-                <div class="title">Modifier une question</div>
-                <div class="desc">Modifie ou supprime les questions comme bon vous sembles</div>
-            </a>
-            <a href="" class="action-card">
+            <a href="Voir_tout.php" class="action-card">
                 <div class="action-icon amber">☰</div>
                 <div class="title">Voir tout</div>
-                <div class="desc">Voir toutes les catégories et les questions de celle-ci</div>
+                <div class="desc">Voir toutes les catégories et les questions pour pouvoir les modifiers</div>
             </a>
             <a href="Create_categorie.php" class="action-card">
                 <div class="action-icon blue">+</div>
