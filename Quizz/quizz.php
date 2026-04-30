@@ -53,9 +53,24 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && !isset($_POST["end"]) ) { // remplis
     $date = $_POST["date"];
     $next_section = $_POST["next_section"];
 
-    $stmt = $db->prepare("INSERT INTO reponses(tentative_id, question_id, reponse_utilisateur, correcte)
-                        VALUES (?,?,?,?) ");
-    $stmt->execute([$tentative_id, $question_id, $reponse_utilisateur, $correcte]);
+    // vérification si la réponse existe déjà ou non
+
+    $reponse_db_tmp = $db->prepare("SELECT reponse_utilisateur
+                                FROM reponses
+                                WHERE tentative_id = ? AND question_id = ? ");
+    $reponse_db_tmp->execute([$tentative_id, $question_id]);
+    $reponse_db = $reponse_db_tmp->fetch();
+
+    if($reponse_db){
+        $stmt = $db->prepare("UPDATE reponses 
+                            SET reponse_utilisateur = ? 
+                            WHERE tentative_id = ? AND question_id = ? ");
+        $stmt->execute([$reponse_utilisateur, $tentative_id, $question_id]);
+    } else {
+        $stmt = $db->prepare("INSERT INTO reponses(tentative_id, question_id, reponse_utilisateur, correcte)
+                            VALUES (?,?,?,?) ");
+        $stmt->execute([$tentative_id, $question_id, $reponse_utilisateur, $correcte]);
+    }
 
     // On protège la date pour qu'elle passe sans encombre dans l'URL
     header("Location: quizz.php?date=" . urlencode($date) . "&section=" . $next_section);
@@ -88,8 +103,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["end"])) { // isset une 
     $stmt = $db->prepare("DELETE FROM questions_en_cours WHERE tentative_id = ?");
     $stmt->execute([$tentative_id]);
 
-    header("Locationc: #"); // vers les résultats, pas encore défini
-
+    header("Locationc: #"); // vers les résultats (pas encore défini)
     exit();
 
 }

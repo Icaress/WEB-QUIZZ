@@ -9,7 +9,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         echo "La catégorie a besoin d'un nom";
     } 
     else {
-        $check = $db->prepare("SELECT * FROM categorie WHERE nom=?");
+        $check = $db->prepare("SELECT * FROM catégorie WHERE nom=?");
         $check->execute([$nom]);
         $exists = $check->fetch(PDO::FETCH_ASSOC);
 
@@ -17,7 +17,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             echo "Nom déjà utilisé";
         } 
         else {    
-            $stmt = $db->prepare("INSERT INTO categorie(nom) VALUES (?)");
+            $stmt = $db->prepare("INSERT INTO catégorie(nom) VALUES (?)");
             $stmt->execute([$nom]);
             header("Location: Admin_panel.php");
             exit();
