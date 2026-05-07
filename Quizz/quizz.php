@@ -103,7 +103,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["end"])) { // isset une 
     $stmt = $db->prepare("DELETE FROM questions_en_cours WHERE tentative_id = ?");
     $stmt->execute([$tentative_id]);
 
-    header("Locationc: #"); // vers les résultats (pas encore défini)
+    header("Location: #"); // vers les résultats (pas encore défini)
     exit();
 
 }
@@ -130,6 +130,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["end"])) { // isset une 
     <?php for($q = 1; $q <= 10; $q++) { ?>
         <button onclick="show('<?= $q ?>')" class="btn"><?= $q ?></button>
     <?php } ?>
+        <button onclick="show('11')" class="btn">Terminer</button>
 
     <?php
     // vérifier dans questions en cours s'il y a un contenu pour la tentative
@@ -196,37 +197,37 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["end"])) { // isset une 
     <?php 
     foreach ($questions as $row_question) { ?>
         
-        <section class='section' id='<?= $q ?>'>
+        <section class="section" id="<?= $q ?>">
 
             <form action="" method="post">
 
-                <p>Question : <?= $row_question["question"] ?> </p>
+                <p>Question : <?= htmlspecialchars($row_question["question"]) ?> </p>
 
                 <div>
                     <p>
                         <input type="radio" name="reponse" value="1" id="<?=$q?>1">
-                        <label for="<?=$q?>1"><?= $row_question["reponse1"] ?></label>
+                        <label for="<?=$q?>1"><?= htmlspecialchars($row_question["reponse1"]) ?></label>
                     </p>
                 </div>
 
                 <div>
                     <p>
                         <input type="radio" name="reponse" value="2" id="<?=$q?>2">
-                        <label for="<?=$q?>2"><?= $row_question["reponse2"] ?></label>
+                        <label for="<?=$q?>2"><?= htmlspecialchars($row_question["reponse2"]) ?></label>
                     </p>
                 </div>
 
                 <div>
                     <p>
                         <input type="radio" name="reponse" value="3" id="<?=$q?>3">
-                        <label for="<?=$q?>3"><?= $row_question["reponse3"] ?></label>
+                        <label for="<?=$q?>3"><?= htmlspecialchars($row_question["reponse3"]) ?></label>
                     </p>
                 </div>
 
                 <div>
                     <p>
                         <input type="radio" name="reponse" value="4" id="<?=$q?>4">
-                        <label for="<?=$q?>4"><?= $row_question["reponse4"] ?></label>
+                        <label for="<?=$q?>4"><?= htmlspecialchars($row_question["reponse4"]) ?></label>
                     </p>
                 </div>
 

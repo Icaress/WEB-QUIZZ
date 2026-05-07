@@ -1,10 +1,12 @@
 <?php
 require_once '../Configuration/config.php';
+//require_once '../Configuration/Perm_verif.php';
 
-if($_SERVER["REQUEST_METHOD"] == "POST"){
+if ($_SERVER["REQUEST_METHOD"] == "POST"){
     $nom = trim($_POST["nom"]);
 
     
+<<<<<<< HEAD
     if ($nom == ''){
         echo "La catégorie a besoin d'un nom";
     } 
@@ -21,9 +23,27 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             $stmt->execute([$nom]);
             header("Location: Admin_panel.php");
             exit();
+=======
+    $check = $db->prepare("SELECT * FROM catégorie WHERE nom=?");
+    $check->execute([$nom]);
+    $exists = $check->fetch(PDO::FETCH_ASSOC);
+
+    if ($exists) {
+        echo "Nom déjà utilisé";
+    } 
+    else {    
+    try {
+        $stmt = $db->prepare("INSERT INTO catégorie(nom) VALUES (?)");
+        $stmt->execute([$nom]);
+        header("Location: Admin_panel.php");
+        exit();
+    } catch (PDOException $e) {
+        echo "Erreur SQL : " . $e->getMessage();
+>>>>>>> 86e290f53460b9cbe81a3f1c46aabeae00373e64
         }
     }
 }
+    
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -41,7 +61,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         <h1>Crée ta catégorie</h1>
         <div id='nom_catégorie'>
             <label for="nom">Nom de la catégorie</label>
-            <input type="text" name='nom' placeholder='Ex : Science'>
+            <input type="text" name='nom' placeholder='Ex : Science' required>
         </div>
         <input type="submit" value='Crée une catégorie' >
     </form>
