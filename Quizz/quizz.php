@@ -107,7 +107,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["end"])) { // isset une 
     // $stmt = $db->prepare("DELETE FROM questions_en_cours WHERE tentative_id = ?");
     // $stmt->execute([$tentative_id]);
 
-    header("Location: results.php?tentative_id=$tentative_id"); // vers les résultats (pas encore défini)
+    header("Location: ../Résultat/Résultat.php?tentative_id=$tentative_id"); // vers les résultats (pas encore défini)
     exit();
     
 }
