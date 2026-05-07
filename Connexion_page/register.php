@@ -148,7 +148,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <hr class="flex-grow-1">
             </div>
 
-            <p class="mb-0 small">Déjà un compte ? <a href="../login.php" class="fw-bold text-decoration-none" style="color: #8a84ff;">Se connecter</a></p>
+            <p class="mb-0 small">Déjà un compte ? <a href="../Connexion_page/login.php" class="fw-bold text-decoration-none" style="color: #8a84ff;">Se connecter</a></p>
 
         </div>
     </div>

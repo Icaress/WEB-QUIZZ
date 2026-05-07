@@ -24,7 +24,7 @@
         <div class="text-center m-3 p-4 rounded-5" id="desc">
             <p class="p1">"Catégorie nom"</p>
             <p class="p2">Vous allez commencer le Quizz "Catégorie nom". Veuillez noter les règles qui vont être prescrit dans un instant après le bouton.</p>
-            <button onclick="show('Règle')" class="btn">Préparé-vous</button>
+            <button onclick="show('Règle')" class="btn">Préparez-vous</button>
         </div>
     </section>
 
@@ -32,7 +32,7 @@
         <div class="text-center p-4 rounded-5 mt-" id="desc_2">
             <p class="p1">Les Règles</p>
             <p class="p2_">-Le QCM sera lancé en pleine écran, si vous le quittez vous serez sanctionné .<br>-Si vous changer d’onglet cela sera détecter et vous serez également sanctionné.<br>-Le QCM aura un temp défini selon le créateur de celui-ci.<br>-Les pages ne seront pas modifiable ni sélectionnable durant le QCM.</p>
-            <button onclick="window.location.href='../Question/QUIZZ.php'" class="btn">Commencer</button>
+            <button onclick="window.location.href='../Quizz/quizz.php'" class="btn">Commencer</button>
         </div>
     </section>
 </body>
