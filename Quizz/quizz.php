@@ -3,15 +3,15 @@
 session_start();
 date_default_timezone_set('Europe/Paris');
 
-// ajouter une condition qui confirme le début du quizz
-
 require "../Configuration/config.php";
 
 $utilisateur_id = $_SESSION["id"];
 
-if(isset($_GET["catégorie"]) && !isset($_GET["section"])){ // faire une condition que l'utiisateur reçois dans le header pour ne pas 
-                        // recréer une tentative et utiliser la présente lors d'une recharge accidentelle de la page
-                        // ne reçois pas de section à afficher
+
+// faire une condition que l'utiisateur reçois dans le header pour ne pas 
+// recréer une tentative et utiliser la présente lors d'une recharge accidentelle de la page
+// ne reçois pas de section à afficher
+if(isset($_GET["catégorie"]) && !isset($_GET["section"])){ 
     $catégorie = $_GET["catégorie"];
     
     $date = (new DateTime())->format('Y-m-d H:i:s');
@@ -22,10 +22,12 @@ if(isset($_GET["catégorie"]) && !isset($_GET["section"])){ // faire une conditi
     // On récupère directement l'ID généré (le dernier)
     $tentative_id = $db->lastInsertId();
 
-} else if (isset($_GET["date"])) { // ceci get une variable qui affirme que la tentative n'est pas terminée
-                                        // le score n'est pas encore défini
+} 
+ // ceci get une variable qui affirme que la tentative n'est pas terminée
+// le score n'est pas encore défini
 
-    // On envoie un $_GET["date"] par le header de post et on prend tentative_id
+// On envoie un $_GET["date"] par le header de post et on prend tentative_id
+else if (isset($_GET["date"])) {
     $date = $_GET["date"];
 
     $stmt = $db->prepare("SELECT id, score 
@@ -44,17 +46,20 @@ if(isset($_GET["catégorie"]) && !isset($_GET["section"])){ // faire une conditi
 
 }
 
-if ($_SERVER["REQUEST_METHOD"] == "POST" && !isset($_POST["end"]) ) { // remplissage des réponses pas section
-    // envoie des : tentative_id, question_id, reponse_utilisateur, correcte
+// remplissage des réponses pas section
+// envoie des : tentative_id, question_id, reponse_utilisateur, correcte
+if ($_SERVER["REQUEST_METHOD"] == "POST" && !isset($_POST["end"]) ) { 
     $tentative_id = $_POST["tentative_id"];
     $question_id = $_POST["question_id"];
     $reponse_utilisateur = $_POST["reponse"];
     $correcte = $_POST["correcte"];
     $date = $_POST["date"];
     $next_section = $_POST["next_section"];
+    if($next_section=="11"){
+        $next_section = "terminer";
+    }
 
     // vérification si la réponse existe déjà ou non
-
     $reponse_db_tmp = $db->prepare("SELECT reponse_utilisateur
                                 FROM reponses
                                 WHERE tentative_id = ? AND question_id = ? ");
@@ -100,12 +105,12 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["end"])) { // isset une 
     $stmt = $db->prepare("UPDATE tentatives set score = ? where id = ?");
     $stmt->execute([$score, $tentative_id]);
 
-    $stmt = $db->prepare("DELETE FROM questions_en_cours WHERE tentative_id = ?");
-    $stmt->execute([$tentative_id]);
+    // $stmt = $db->prepare("DELETE FROM questions_en_cours WHERE tentative_id = ?");
+    // $stmt->execute([$tentative_id]);
 
-    header("Location: #"); // vers les résultats (pas encore défini)
+    header("Location: results.php?tentative_id=$tentative_id"); // vers les résultats (pas encore défini)
     exit();
-
+    
 }
 
 ?>
@@ -129,8 +134,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["end"])) { // isset une 
 
     <?php for($q = 1; $q <= 10; $q++) { ?>
         <button onclick="show('<?= $q ?>')" class="btn"><?= $q ?></button>
-    <?php } ?>
-        <button onclick="show('11')" class="btn">Terminer</button>
+    <?php } ?> 
+        <button onclick="show('terminer')" class="btn">Terminer</button>
 
     <?php
     // vérifier dans questions en cours s'il y a un contenu pour la tentative
@@ -243,12 +248,13 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["end"])) { // isset une 
 
         </section>
         
-    <?php 
-    $q++;
+    <?php $q++;
+
     } 
+    
     ?>
 
-    <section class="section" id="11">
+    <section class="section" id="terminer">
         <form action="" method="post">
             <h1>Vérifie toutes tes réponses avant de confirmer ^-^</h1>
             <input type="hidden" name="end" value="yes">
