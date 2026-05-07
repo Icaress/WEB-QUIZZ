@@ -1,16 +1,17 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.2
+-- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Hôte : localhost:3306
--- Généré le : jeu. 07 mai 2026 à 08:51
--- Version du serveur : 5.7.24
--- Version de PHP : 8.3.1
-
+-- Hôte : 127.0.0.1
+-- Généré le : jeu. 07 mai 2026 à 11:28
+-- Version du serveur : 10.4.32-MariaDB
+-- Version de PHP : 8.2.12
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
 SET time_zone = "+00:00";
-
+DROP DATABASE IF EXISTS `web_quizz`;
+CREATE DATABASE `web_quizz`;
+USE `web_quizz`;
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -29,16 +30,15 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `catégorie` (
   `id` int(11) NOT NULL,
-  `nom` varchar(50) NOT NULL,
-  `description` text NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `nom` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Déchargement des données de la table `catégorie`
 --
 
-INSERT INTO `catégorie` (`id`, `nom`, `description`) VALUES
-(1, 'HTTP/CSS', 'Voici votre QCM de HTML/CSS');
+INSERT INTO `catégorie` (`id`, `nom`) VALUES
+(1, 'HTTP/CSS');
 
 -- --------------------------------------------------------
 
@@ -55,7 +55,7 @@ CREATE TABLE `questions` (
   `reponse4` varchar(50) NOT NULL,
   `bonne_reponse` int(11) NOT NULL,
   `catégorie` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Déchargement des données de la table `questions`
@@ -96,7 +96,7 @@ INSERT INTO `questions` (`id`, `question`, `reponse1`, `reponse2`, `reponse3`, `
 (32, 'Comment arrondir 4.7 à l\'entier le plus proche (5) ?', 'Math.floor(4.7)', 'Math.ceil(4.7)', 'Math.round(4.7)', 'Math.int(4.7)', 3, 2),
 (33, 'Quel mot-clé permet d\'arrêter l\'itération actuelle d\'une boucle et de passer à la suivante ?', 'break', 'stop', 'next', 'continue', 4, 2),
 (34, 'Comment transformer une chaîne en minuscules ?', 'toLowerCase()', 'lower()', 'min()', 'caseSmall()', 1, 2),
-(35, 'Quel symbole entoure les littéraux de gabarits (template literals) pour l\'interpolation ?', '\"', '\"', '` (backtick)', '{ }', 3, 2),
+(35, 'Quel symbole entoure les littéraux de gabarits (template literals) pour l\'interpolation ?', '\'', '\"', '` (backtick)', '{ }', 3, 2),
 (36, 'Quelle méthode fusionne deux tableaux ou plus ?', 'join()', 'concat()', 'merge()', 'combine()', 2, 2),
 (37, 'Comment vérifier si une valeur est \"Not-a-Number\" ?', 'isNumber()', 'checkNaN()', 'isNaN()', 'verify()', 3, 2),
 (38, 'Quelle propriété d\'un objet \"Math\" donne la valeur de PI ?', 'Math.pi', 'Math.PI', 'Math.getPI()', 'Math.constant(PI)', 2, 2),
@@ -182,14 +182,15 @@ CREATE TABLE `questions_en_cours` (
   `id_8` int(1) NOT NULL,
   `id_9` int(1) NOT NULL,
   `id_10` int(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Déchargement des données de la table `questions_en_cours`
 --
 
 INSERT INTO `questions_en_cours` (`id`, `tentative_id`, `id_1`, `id_2`, `id_3`, `id_4`, `id_5`, `id_6`, `id_7`, `id_8`, `id_9`, `id_10`) VALUES
-(6, 10, 38, 50, 37, 46, 43, 34, 39, 48, 29, 30);
+(6, 10, 38, 50, 37, 46, 43, 34, 39, 48, 29, 30),
+(7, 12, 50, 30, 27, 42, 26, 28, 33, 49, 45, 29);
 
 -- --------------------------------------------------------
 
@@ -203,7 +204,7 @@ CREATE TABLE `reponses` (
   `question_id` int(11) NOT NULL,
   `reponse_utilisateur` int(11) NOT NULL,
   `correcte` tinyint(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Déchargement des données de la table `reponses`
@@ -214,7 +215,10 @@ INSERT INTO `reponses` (`id`, `tentative_id`, `question_id`, `reponse_utilisateu
 (12, 10, 30, 2, 2),
 (13, 10, 39, 1, 3),
 (14, 10, 48, 2, 2),
-(15, 10, 46, 3, 1);
+(15, 10, 46, 3, 1),
+(16, 10, 29, 3, 2),
+(17, 10, 34, 1, 1),
+(18, 10, 43, 4, 3);
 
 -- --------------------------------------------------------
 
@@ -227,7 +231,7 @@ CREATE TABLE `tentatives` (
   `utilisateur_id` int(11) NOT NULL,
   `score` float NOT NULL,
   `date` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Déchargement des données de la table `tentatives`
@@ -235,7 +239,8 @@ CREATE TABLE `tentatives` (
 
 INSERT INTO `tentatives` (`id`, `utilisateur_id`, `score`, `date`) VALUES
 (10, 2, 0, '2026-05-07 08:44:28'),
-(11, 2, 0, '2026-05-07 08:44:52');
+(11, 2, 0, '2026-05-07 08:44:52'),
+(12, 2, 0, '2026-05-07 11:05:40');
 
 -- --------------------------------------------------------
 
@@ -249,8 +254,8 @@ CREATE TABLE `utilisateurs` (
   `prenom` varchar(50) NOT NULL,
   `email` varchar(50) NOT NULL,
   `mot_de_passe` varchar(255) NOT NULL,
-  `role` tinyint(1) NOT NULL DEFAULT '0'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `role` tinyint(1) NOT NULL DEFAULT 0
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Déchargement des données de la table `utilisateurs`
@@ -319,19 +324,25 @@ ALTER TABLE `questions`
 -- AUTO_INCREMENT pour la table `questions_en_cours`
 --
 ALTER TABLE `questions_en_cours`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT pour la table `reponses`
 --
 ALTER TABLE `reponses`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT pour la table `tentatives`
 --
 ALTER TABLE `tentatives`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+
+--
+-- AUTO_INCREMENT pour la table `utilisateurs`
+--
+ALTER TABLE `utilisateurs`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
