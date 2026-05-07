@@ -1,14 +1,13 @@
 <?php 
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-
 session_start();
 
 require_once "../Configuration/config.php";
 
 $categories = $db->query("SELECT * FROM `catégorie`")->fetchAll(PDO::FETCH_ASSOC);
-var_dump($categories);
+
+$nb_users    = $db->query("SELECT COUNT(*) as total FROM utilisateurs")->fetch(PDO::FETCH_ASSOC)['total'];
+$nb_questions = $db->query("SELECT COUNT(*) as total FROM questions")->fetch(PDO::FETCH_ASSOC)['total'];
+$nb_categories = $db->query("SELECT COUNT(*) as total FROM catégorie")->fetch(PDO::FETCH_ASSOC)['total'];
 ?>
 
 <!DOCTYPE html>
@@ -47,9 +46,9 @@ var_dump($categories);
         </div>
 
             <div class="info">
-                <div> <p class="big">240</p> <p>questions</p> </div>
-                <div> <p class="big">1.2k</p> <p>Joueurs</p> </div>
-                <div> <p class="big">8</p> <p>Catégories</p> </div>
+                <div> <p class="big"><?= $nb_questions ?></p> <p>questions</p> </div>
+                <div> <p class="big"><?= $nb_users?></p> <p>Joueurs</p> </div>
+                <div> <p class="big"><?= $nb_categories?></p> <p>Catégories</p> </div>
             </div>
 
             <div class="row justify-content-center align-items-center my-5 w-100">
@@ -65,19 +64,19 @@ var_dump($categories);
         </div>
     </section>
 
-    <?php// Quizz ?>
+    <?php //Quizz ?>
     <section class='section' id='QUIZZ'>
         <div class="text-center m-3 p-4 rounded-5" id="desc">
             <br>
             <p class="p1">Choix de la catégorie du QUIZZ </p>
             <p class="sous_texte">Choisir une catégorie te permet de jouer dans le domaine qui t'intéresse le plus, que ce soit le JavaScript, les bases de données ou les algorithmes. Comme ça tu progresses là où tu en as vraiment besoin, à ton rythme.</p>
-            <button type="" class="btn">Commencer le quiz</button>
+            <button onclick="document.getElementById('section_quizz').scrollIntoView({behavior: 'smooth'})">Commencer le quiz</button>
         </div>
         <section id='section_quizz'>
             <div id="catégories">    
                 <?php foreach ($categories as $C) :?>
                     <h1><?= $C["nom"]?></h1>
-                    <a class="btn" href="../Quizz/quizz.php?catégorie=<?=$C["id"]?>"></a>
+                    <a href="../Quizz/quizz.php?catégorie=<?=$C["id"]?>">Commencer</a>
                 <?php endforeach; ?>
             </div>
         </section>
