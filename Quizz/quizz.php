@@ -124,7 +124,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["end"])) { // isset une 
 </head>
 
 <body>
-     <script src="../Fonction/anticheat.js" defer></script>
+    <?php //<script src="../Fonction/anticheat.js" defer></script> ?>
 
     <?php // affiche les boutons 1 à 10 où on affiche une section ?>
 
