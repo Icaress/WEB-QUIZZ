@@ -7,6 +7,24 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
     $description = trim($_POST["description"]);
 
     
+<<<<<<< HEAD
+    if ($nom == ''){
+        echo "La catégorie a besoin d'un nom";
+    } 
+    else {
+        $check = $db->prepare("SELECT * FROM catégorie WHERE nom=?");
+        $check->execute([$nom]);
+        $exists = $check->fetch(PDO::FETCH_ASSOC);
+
+        if ($exists) {
+            echo "Nom déjà utilisé";
+        } 
+        else {    
+            $stmt = $db->prepare("INSERT INTO catégorie(nom) VALUES (?)");
+            $stmt->execute([$nom]);
+            header("Location: Admin_panel.php");
+            exit();
+=======
     $check = $db->prepare("SELECT * FROM catégorie WHERE nom=?");
     $check->execute([$nom]);
     $exists = $check->fetch(PDO::FETCH_ASSOC);
@@ -22,6 +40,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
         exit();
     } catch (PDOException $e) {
         echo "Erreur SQL : " . $e->getMessage();
+>>>>>>> 86e290f53460b9cbe81a3f1c46aabeae00373e64
         }
     }
 }

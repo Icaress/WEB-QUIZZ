@@ -72,7 +72,7 @@ $nb_categories = $db->query("SELECT COUNT(*) as total FROM catégorie")->fetch(P
                 <div class="title">Voir tout les utilisateurs</div>
                 <div class="desc">Gère les utilisateurs</div>
             </a>
-            <?php if($_SESSION["perm"] === 2): ?>
+            <?php if($_SESSION["role"] === 2): ?>
             <a href="Sign_up.php" class="action-card">
                 <div class="action-icon red">+</div>
                 <div class="title">Crée un administrateur</div>
