@@ -25,7 +25,7 @@
                         </button>
                         <div class="collapse" id="log_out">
                             <div class="d-flex flex-column">
-                                <a href="">Settings</a>
+                                <a href="../Settings/settings.php">Settings</a>
                                 <a href="../Connexion_page/log_out.php">Log out</a>
                             </div>
                         </div>

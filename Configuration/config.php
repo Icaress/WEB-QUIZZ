@@ -1,5 +1,7 @@
 <?php
 
+session_start();
+
 //CE CODE EST A IMPORTER DANS LE PHP DE CHAQUE PAGE AFIN DE SE CONNECTER A LA BASE DE DONNEES
 
 $host = "localhost"; // Adresse du serveur de base de données
