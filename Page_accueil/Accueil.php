@@ -1,7 +1,14 @@
 <?php 
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
 
 session_start();
 
+require_once "../Configuration/config.php";
+
+$categories = $db->query("SELECT * FROM `catégorie`")->fetchAll(PDO::FETCH_ASSOC);
+var_dump($categories);
 ?>
 
 <!DOCTYPE html>
@@ -28,7 +35,7 @@ session_start();
 </header>
 
 <body>
-    <?php // Acceuil ?>
+    <?php // Accueil ?>
     <section class='section' id='Accueil'>
         <div class="text-center m-3 p-4 rounded-5" id="desc">
             <div class="d-inline-block px-5 rounded-4">
@@ -58,40 +65,22 @@ session_start();
         </div>
     </section>
 
-    <?php // Quizz ?>
+    <?php// Quizz ?>
     <section class='section' id='QUIZZ'>
         <div class="text-center m-3 p-4 rounded-5" id="desc">
             <br>
             <p class="p1">Choix de la catégorie du QUIZZ </p>
             <p class="sous_texte">Choisir une catégorie te permet de jouer dans le domaine qui t'intéresse le plus, que ce soit le JavaScript, les bases de données ou les algorithmes. Comme ça tu progresses là où tu en as vraiment besoin, à ton rythme.</p>
-            <button type="submit" class="btn">Commencer le quiz</button>
-            <section id='section_quizz'>
-
-            </section>
+            <button type="" class="btn">Commencer le quiz</button>
         </div>
-
-        <div id="catégories">
-            <form action="" method="">
-                <div class="btn">
-                    HTML / CSS
-                    <a href="../Quizz/quizz.php?catégorie=1">ok</a>
-                </div>
-                <div class="btn">
-                    JavaScript
-                    <a href="../Quizz/quizz.php?catégorie=2">ok</a>
-                </div>
-
-                <div class="btn">
-                    Base de données
-                    <a href="../Quizz/quizz.php?catégorie=3">ok</a>
-                </div>
-
-                <div class="btn">
-                    Algorithmes
-                    <a href="../Quizz/quizz.php?catégorie=4">ok</a>
-                </div>
-            </form>
-        </div>
+        <section id='section_quizz'>
+            <div id="catégories">    
+                <?php foreach ($categories as $C) :?>
+                    <h1><?= $C["nom"]?></h1>
+                    <a class="btn" href="../Quizz/quizz.php?catégorie=<?=$C["id"]?>"></a>
+                <?php endforeach; ?>
+            </div>
+        </section>
     </section>
 
     <?php // Historique ?>

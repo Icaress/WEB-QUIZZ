@@ -33,7 +33,8 @@ USE web_quizz;
 
 CREATE TABLE `catégorie` (
   `id` int(11) NOT NULL,
-  `nom` varchar(50) NOT NULL
+  `nom` varchar(50) NOT NULL,
+  `description` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- --------------------------------------------------------

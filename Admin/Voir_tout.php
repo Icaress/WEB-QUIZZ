@@ -53,7 +53,7 @@ if(isset($_POST['delete'])){
             </div> 
         </details>
 
-        <?php endforeach; ?>
+    <?php endforeach; ?>
 <?php endif; ?>
 </body>
 </html>
