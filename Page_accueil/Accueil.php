@@ -66,17 +66,28 @@ $nb_categories = $db->query("SELECT COUNT(*) as total FROM catégorie")->fetch(P
 
     <?php //Quizz ?>
     <section class='section' id='QUIZZ'>
-        <div class="text-center m-3 p-4 rounded-5" id="desc">
+        <div class="text-center m-5 p-4 rounded-5" id="desc">
             <br>
             <p class="p1">Choix de la catégorie du QUIZZ </p>
             <p class="sous_texte">Choisir une catégorie te permet de jouer dans le domaine qui t'intéresse le plus, que ce soit le JavaScript, les bases de données ou les algorithmes. Comme ça tu progresses là où tu en as vraiment besoin, à ton rythme.</p>
             <button onclick="document.getElementById('section_quizz').scrollIntoView({behavior: 'smooth'})">Commencer le quiz</button>
         </div>
         <section id='section_quizz'>
-            <div id="catégories">    
+            <div id="catégories" class="row">    
                 <?php foreach ($categories as $C) :?>
-                    <h1><?= $C["nom"]?></h1>
-                    <a href="../Quizz/quizz.php?catégorie=<?=$C["id"]?>">Commencer</a>
+                    <div class="cat m-4 col-6">
+                        <h1><?= $C["nom"]?></h1>
+                        <p><?= $C["description"]?></p>
+                        <?php
+                        if(!isset($_SESSION['id'])){
+                            echo '<a href="../Connexion_page/login.php">Commencer</a>';
+                        }
+                        else{
+                            echo '<a href="../Quizz/quizz.php?catégorie=' . $C["id"] . '">Commencer</a>';
+                        }
+                        ?>
+                        
+                    </div>
                 <?php endforeach; ?>
             </div>
         </section>
