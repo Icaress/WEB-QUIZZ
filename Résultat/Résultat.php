@@ -17,6 +17,10 @@ if(isset($_GET["tentative_id"])){
     $temp->execute([$tentative_id]);
     $results = $temp->fetchAll();
 
+    $temp = $db->prepare("SELECT score FROM tentatives WHERE id = ?");
+    $temp->execute([$tentative_id]);
+    $score = $temp->fetchColumn();
+
 }
 
 ?>
@@ -45,30 +49,32 @@ if(isset($_GET["tentative_id"])){
         </div>
     </header>
 
-<div>
+    <h1>score : <?= $score ?></h1>
 
-    <?php foreach($results as $result){ 
+    <div>
 
-// définir juste l'affichage d'une réponse qui a l'id égale à la variable
-// genre getElementById($id_reponse) en rouge et getElementById($id_correcte) en vert
-// et définir la couleur de reponse PUIS celle correcte, comme ça, si la réponse est correcte, on garde le vert
-        $id_reponse = $result["reponse_utilisateur"];
-        $id_correcte = $result["correcte"];
-        
-        ?>
+        <?php foreach($results as $result){ 
 
-        <div>
-            <h2><?= htmlspecialchars($result["question"]) ?></h2>
-            <p id="1"> <?= htmlspecialchars($result["reponse1"]) ?> </p>
-            <p id="2"> <?= htmlspecialchars($result["reponse2"]) ?> </p>
-            <p id="3"> <?= htmlspecialchars($result["reponse3"]) ?> </p>
-            <p id="4"> <?= htmlspecialchars($result["reponse4"]) ?> </p>
-        </div>
-        <br>
+    // définir juste l'affichage d'une réponse qui a l'id égale à la variable
+    // genre getElementById($id_reponse) en rouge et getElementById($id_correcte) en vert
+    // et définir la couleur de reponse PUIS celle correcte, comme ça, si la réponse est correcte, on garde le vert
+            $id_reponse = $result["reponse_utilisateur"];
+            $id_correcte = $result["correcte"];
+            
+            ?>
 
-    <?php } ?>
+            <div>
+                <h2><?= htmlspecialchars($result["question"]) ?></h2>
+                <p id="1"> <?= htmlspecialchars($result["reponse1"]) ?> </p>
+                <p id="2"> <?= htmlspecialchars($result["reponse2"]) ?> </p>
+                <p id="3"> <?= htmlspecialchars($result["reponse3"]) ?> </p>
+                <p id="4"> <?= htmlspecialchars($result["reponse4"]) ?> </p>
+            </div>
+            <br>
 
-</div>
+        <?php } ?>
+
+    </div>
 
 </body>
 
