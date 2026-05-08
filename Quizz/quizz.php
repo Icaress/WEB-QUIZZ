@@ -1,5 +1,7 @@
 <?php 
-session_start();
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 date_default_timezone_set('Europe/Paris');
 
 require "../Configuration/config.php";
@@ -10,6 +12,7 @@ $utilisateur_id = $_SESSION["id"];
 // faire une condition que l'utiisateur reçois dans le header pour ne pas 
 // recréer une tentative et utiliser la présente lors d'une recharge accidentelle de la page
 // ne reçois pas de section à afficher
+
 if(isset($_GET["catégorie"]) && !isset($_GET["section"])){ 
     $catégorie = $_GET["catégorie"];
     
@@ -75,6 +78,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && !isset($_POST["end"]) ) {
                             VALUES (?,?,?,?) ");
         $stmt->execute([$tentative_id, $question_id, $reponse_utilisateur, $correcte]);
     }
+ 
 
     // On protège la date pour qu'elle passe sans encombre dans l'URL
     header("Location: quizz.php?date=" . urlencode($date) . "&section=" . $next_section);
@@ -122,21 +126,25 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["end"])) { // isset une 
     <title>Document</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
-    <script src='../Fonction/show.js'></script>
+    <script src='../Fonction/show.js' defer></script>
     <link rel="stylesheet" href="../navbar/navbar.css">
     <link rel="stylesheet" href="../footer/footer.css">
+    <link rel="stylesheet" href="quizz.css">
 </head>
 
 <body>
     <?php //<script src="../Fonction/anticheat.js" defer></script> ?>
 
     <?php // affiche les boutons 1 à 10 où on affiche une section ?>
-
-    <?php for($q = 1; $q <= 10; $q++) { ?>
-        <button onclick="show('<?= $q ?>')" class="btn"><?= $q ?></button>
-    <?php } ?> 
-        <button onclick="show('terminer')" class="btn">Terminer</button>
-
+    
+    <div id="wrapper">
+        <div id='conteneur'>
+            <?php for($q = 1; $q <= 10; $q++) { ?>
+                <button onclick="show('<?= $q ?>')" class="nbr btn"><?= $q ?></button>
+            <?php } ?> 
+            <button onclick="show('terminer')" class="terminer btn">Terminer</button>
+        </div>  
+    </div>
     <?php
     // vérifier dans questions en cours s'il y a un contenu pour la tentative
     // s'il n'y en a pas, prendre 10 au hasard 
@@ -179,7 +187,6 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["end"])) { // isset une 
         $questions_fetch->execute([$catégorie]);
         
         $questions = $questions_fetch->fetchAll();
-
         $questions_id = [];
 
         for($n = 0 ; $n<10 ; $n++) {
@@ -201,38 +208,37 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["end"])) { // isset une 
 
     <?php 
     foreach ($questions as $row_question) { ?>
-        
         <section class="section" id="<?= $q ?>">
 
             <form action="" method="post">
 
-                <p>Question : <?= htmlspecialchars($row_question["question"]) ?> </p>
+                <p id='title'><?= htmlspecialchars($row_question["question"]) ?></p>
 
                 <div>
                     <p>
                         <input type="radio" name="reponse" value="1" id="<?=$q?>1">
-                        <label for="<?=$q?>1"><?= htmlspecialchars($row_question["reponse1"]) ?></label>
+                        <label for="<?=$q?>1">A) <?= htmlspecialchars($row_question["reponse1"]) ?></label>
                     </p>
                 </div>
 
                 <div>
                     <p>
                         <input type="radio" name="reponse" value="2" id="<?=$q?>2">
-                        <label for="<?=$q?>2"><?= htmlspecialchars($row_question["reponse2"]) ?></label>
+                        <label for="<?=$q?>2">B) <?= htmlspecialchars($row_question["reponse2"]) ?></label>
                     </p>
                 </div>
 
                 <div>
                     <p>
                         <input type="radio" name="reponse" value="3" id="<?=$q?>3">
-                        <label for="<?=$q?>3"><?= htmlspecialchars($row_question["reponse3"]) ?></label>
+                        <label for="<?=$q?>3">C) <?= htmlspecialchars($row_question["reponse3"]) ?></label>
                     </p>
                 </div>
 
                 <div>
                     <p>
                         <input type="radio" name="reponse" value="4" id="<?=$q?>4">
-                        <label for="<?=$q?>4"><?= htmlspecialchars($row_question["reponse4"]) ?></label>
+                        <label for="<?=$q?>4">D) <?= htmlspecialchars($row_question["reponse4"]) ?></label>
                     </p>
                 </div>
 
@@ -242,7 +248,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["end"])) { // isset une 
                 <input type="hidden" name="date" value="<?= $date ?>">
                 <input type="hidden" name="next_section" value="<?= $q+1 ?>">
 
-                <button type="submit">Confirm</button>
+                <button type="submit">Répondre</button>
 
             </form>
 
@@ -256,7 +262,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["end"])) { // isset une 
 
     <section class="section" id="terminer">
         <form action="" method="post">
-            <h1>Vérifie toutes tes réponses avant de confirmer ^-^</h1>
+            <h2>Tu as répondu à toutes les questions ! 🎉</h2>
+            <p>Vérifie bien tes réponses avant de valider, tu ne pourras plus les modifier.</p>
             <input type="hidden" name="end" value="yes">
             <input type="hidden" name="tentative_id" value="<?= $tentative_id ?>">
 

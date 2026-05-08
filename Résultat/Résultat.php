@@ -1,13 +1,11 @@
 <?php
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
 session_start();
 require_once "../Configuration/config.php";
 
-$reponses = []; 
 
-$reponsesJS = [];
-foreach ($reponses as $r) {
-    $reponsesJS[$r['question_id']] = ($r['reponse_utilisateur'] == $r['correcte']);
-}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -38,7 +36,6 @@ foreach ($reponses as $r) {
 </body>
 <script>
     let reponses = <?= json_encode($reponsesJS) ?>;
-    
     creerCases(10, reponses);
 </script>
 </html>
