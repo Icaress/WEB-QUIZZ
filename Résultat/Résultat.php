@@ -145,7 +145,7 @@ if(isset($_GET["tentative_id"])){
 //     </main>
 // </body>
 // <script>
-//     let reponses = <?= json_encode($reponsesJS) ?>;
+//     let reponses = <?= json_encode($reponsesJS)
     
 //     creerCases(10, reponses);
 // </script>

@@ -1,5 +1,5 @@
 <?php
-session_start();
+
 require_once "../Configuration/config.php";
 
 if (isset($_POST['email']) && isset($_POST['mdp'])) {

@@ -1,6 +1,7 @@
 <?php
 
-session_start();
+include "../Configuration/config.php";
+
 if (!isset($_SESSION['id'])) {
     header("Location: login.php");
     exit();
@@ -20,8 +21,6 @@ if (!isset($_SESSION['id'])) {
     <link rel="stylesheet" href="../navbar/navbar.css">
 
     <?php include "../navbar/navbar.php"; ?>
-
-    <?php include "../Configuration/config.php"; ?>
 
     <style>
         body {

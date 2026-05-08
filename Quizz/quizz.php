@@ -7,9 +7,7 @@ require "../Configuration/config.php";
 $utilisateur_id = $_SESSION["id"];
 
 
-// faire une condition que l'utiisateur reçois dans le header pour ne pas 
-// recréer une tentative et utiliser la présente lors d'une recharge accidentelle de la page
-// ne reçois pas de section à afficher
+// Ici, création d'une nouvelle tentative
 if(isset($_GET["catégorie"]) && !isset($_GET["section"])){ 
     $catégorie = $_GET["catégorie"];
     
@@ -22,10 +20,9 @@ if(isset($_GET["catégorie"]) && !isset($_GET["section"])){
     $tentative_id = $db->lastInsertId();
 
 } 
- // ceci get une variable qui affirme que la tentative n'est pas terminée
-// le score n'est pas encore défini
 
-// On envoie un $_GET["date"] par le header de post et on prend tentative_id
+// On envoie un $_GET["date"] par le header de post en dessous (juse après ce else if) et on reprend tentative_id 
+// ça vérifie aussi si la tentative est finie ou si elle est en cours
 else if (isset($_GET["date"])) {
     $date = $_GET["date"];
 
@@ -37,7 +34,7 @@ else if (isset($_GET["date"])) {
 
     $tentative_id = $tentative["id"];
 
-    // J'utilise le score pour empêcher un user de modifier ses réponses sur une ancienne tentative
+    // utilisation du score pour empêcher un user de modifier ses réponses sur une ancienne tentative
     if(!empty($tentative["score"])){
         echo "Cette tentative est déjà terminée";
         exit();
@@ -46,15 +43,17 @@ else if (isset($_GET["date"])) {
 }
 
 // remplissage des réponses pas section
-// envoie des : tentative_id, question_id, reponse_utilisateur, correcte
+// envoie des : tentative_id, question_id, reponse_utilisateur, correcte(bonne réponse)
 if ($_SERVER["REQUEST_METHOD"] == "POST" && !isset($_POST["end"]) ) { 
     $tentative_id = $_POST["tentative_id"];
     $question_id = $_POST["question_id"];
     $reponse_utilisateur = $_POST["reponse"];
     $correcte = $_POST["correcte"];
     $date = $_POST["date"];
+
     $next_section = $_POST["next_section"];
-    if($next_section=="11"){
+
+    if($next_section=="11"){ // affichage de la section "terminer" après avoir répondu à la 10e question
         $next_section = "terminer";
     }
 
@@ -65,12 +64,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && !isset($_POST["end"]) ) {
     $reponse_db_tmp->execute([$tentative_id, $question_id]);
     $reponse_db = $reponse_db_tmp->fetch();
 
+    //si une réponse existe, on update
     if($reponse_db){
         $stmt = $db->prepare("UPDATE reponses 
                             SET reponse_utilisateur = ? 
                             WHERE tentative_id = ? AND question_id = ? ");
         $stmt->execute([$reponse_utilisateur, $tentative_id, $question_id]);
-    } else {
+    } 
+    // Si non, on insert une réponse en bdd
+    else {
         $stmt = $db->prepare("INSERT INTO reponses(tentative_id, question_id, reponse_utilisateur, correcte)
                             VALUES (?,?,?,?) ");
         $stmt->execute([$tentative_id, $question_id, $reponse_utilisateur, $correcte]);
@@ -79,21 +81,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && !isset($_POST["end"]) ) {
     // On protège la date pour qu'elle passe sans encombre dans l'URL
     header("Location: quizz.php?date=" . urlencode($date) . "&section=" . $next_section);
     exit();
-
-    //header avec un show 
-    // supprimer le contenu de questions_en_cours où tentative_id = celle de l'utilisateur
 }
 
-if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["end"])) { // isset une info qui vient du bouton qui termine le quuizz
-    // calcul du score et insertion dans tentatives et header vers les résultats
+// Fin du quizz
+if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["end"])) { 
+
     
-    // besoin des réponses de chaque questions où tentative_id = ?
+    // prise des infos nécessaires au calcul du score
     $stmt = $db->prepare("SELECT reponse_utilisateur, correcte
                             FROM reponses 
                             WHERE tentative_id = ?");
     $stmt->execute([$tentative_id]);
     $reponses = $stmt->fetchAll();
 
+    // calcul du score et insertion en bdd
     $score=0;
     foreach ($reponses as $reponse) {
         if($reponse["reponse_utilisateur"] == $reponse["correcte"]){
@@ -104,10 +105,12 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["end"])) { // isset une 
     $stmt = $db->prepare("UPDATE tentatives set score = ? where id = ?");
     $stmt->execute([$score, $tentative_id]);
 
-    // $stmt = $db->prepare("DELETE FROM questions_en_cours WHERE tentative_id = ?");
-    // $stmt->execute([$tentative_id]);
+    // nettoyage de la table questions_en_cours
+    $stmt = $db->prepare("DELETE FROM questions_en_cours WHERE tentative_id = ?");
+    $stmt->execute([$tentative_id]);
 
-    header("Location: ../Résultat/Résultat.php?tentative_id=$tentative_id"); // vers les résultats (pas encore défini)
+    // header vers la page des résultats
+    header("Location: ../Résultat/Résultat.php?tentative_id=$tentative_id"); 
     exit();
     
 }
@@ -149,6 +152,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["end"])) { // isset une 
                                 AND tentatives.utilisateur_id = ?");
     $questions_tmp->execute([$date, $utilisateur_id]);
 
+    // Si les questions sont déjà définies, donc, cas de rechargement de page
     if($questions_tmp->rowCount() > 0){
         $row = $questions_tmp->fetch();
         for($n=1 ; $n <= 10 ; $n++) {
@@ -173,7 +177,9 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["end"])) { // isset une 
         // en gros, on est sûr d'envoyer les valeurs du tableau en ignorant les clés
         // array_merge, c'est pour merge lol
 
-    } else if ($questions_tmp->rowCount() == 0) {
+    } 
+    // Ici, prise des questions aléatoirement depuis la BDD
+    else if ($questions_tmp->rowCount() == 0) {
 
         $questions_fetch = $db->prepare("SELECT * FROM questions WHERE catégorie = ? ORDER BY RAND() LIMIT 10");
         $questions_fetch->execute([$catégorie]);
