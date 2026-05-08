@@ -33,9 +33,7 @@ if(isset($_GET["tentative_id"])){
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="Résultat.css">
-    <script src="Résultat.js"></script>
-    <link rel="stylesheet" href="../footer/footer.css">
-    <title>Document</title>
+    <title>Votre Résultat</title>
 </head>
 
 <body>
@@ -49,40 +47,60 @@ if(isset($_GET["tentative_id"])){
         </div>
     </header>
 
-    <h1>score : <?= $score ?></h1>
-
-    <div>
-
-        <?php foreach($results as $result){ 
-
-    // définir juste l'affichage d'une réponse qui a l'id égale à la variable
-    // genre getElementById($id_reponse) en rouge et getElementById($id_correcte) en vert
-    // et définir la couleur de reponse PUIS celle correcte, comme ça, si la réponse est correcte, on garde le vert
-            $id_reponse = $result["reponse_utilisateur"];
-            $id_correcte = $result["correcte"];
-            
-            ?>
-
-            <div>
-                <h2><?= htmlspecialchars($result["question"]) ?></h2>
-                <p id="1"> <?= htmlspecialchars($result["reponse1"]) ?> </p>
-                <p id="2"> <?= htmlspecialchars($result["reponse2"]) ?> </p>
-                <p id="3"> <?= htmlspecialchars($result["reponse3"]) ?> </p>
-                <p id="4"> <?= htmlspecialchars($result["reponse4"]) ?> </p>
-            </div>
-            <br>
-
-        <?php } ?>
-
+    <div id="score">
+        <h1>Vous avez obtenu <?= $score ?> / 10</h1>
     </div>
 
+    <div id="wrapper">
+        <div id='conteneur'>
+            <?php for($q = 1; $q <= 10; $q++) { ?>
+                <button onclick="show('<?= $q ?>')" class="nbr btn"><?= $q ?></button>
+            <?php } ?> 
+        </div>  
+    </div>
+    
+    <?php 
+    $q = 1;
+    foreach($results as $result){ 
+        $id_reponse = $result["reponse_utilisateur"];
+        $id_correcte = $result["correcte"];
+        
+        $reponses_texte = [
+            1 => $result["reponse1"],
+            2 => $result["reponse2"],
+            3 => $result["reponse3"],
+            4 => $result["reponse4"],
+        ];
+
+        $texte_utilisateur = $reponses_texte[$id_reponse];
+        $texte_correcte = $reponses_texte[$id_correcte];
+?>
+
+        <section class="section" id="<?= $q ?>">
+            <div>
+                <h2><?= htmlspecialchars($result["question"]) ?></h2>
+
+                <?php foreach([1,2,3,4] as $i): ?>
+                    <p class="reponse-btn <?= ($i == $id_correcte) ? 'correcte' : 'incorrecte' ?>">
+                    <?= htmlspecialchars($result["reponse$i"]) ?>
+                    </p>
+                <?php endforeach; ?>
+                <p id='ppp'>
+                <?= ($id_reponse == $id_correcte) ? '✅' : '❌' ?> 
+                Votre réponse : <?= htmlspecialchars($texte_utilisateur) ?>
+                </p>
+            </div>
+        </section>
+
+    <?php 
+    $q++;
+    } ?>
+
+    <script src='../Fonction/show.js'></script>
+    <script>show('1')</script>
 </body>
-
-<footer>
-    <?php include "../footer/footer.html" ?>
-</footer>
-
 </html>
+<<<<<<< HEAD
 
 
 
@@ -150,3 +168,5 @@ if(isset($_GET["tentative_id"])){
 //     creerCases(10, reponses);
 // </script>
 // </html> ?>
+=======
+>>>>>>> f7710c0c4b856a6752cf435159a5ed66fd231665
