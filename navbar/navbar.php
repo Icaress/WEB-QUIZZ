@@ -17,6 +17,9 @@
               <a class="nav-link active" href="#" onclick="show('QUIZZ')">QUIZZ</a>
               <a class="nav-link active" href="#" onclick="show('Historique')">Historique</a>
                 <?php 
+                if (isset($_SESSION["id"]) && $_SESSION['role']>0){
+                    echo "<a class='nav-link active' href='../Admin/Admin_panel.php'>Admin</a>";
+                }
                     if (!isset($_SESSION["id"])){
                         echo "<a class='nav-link active' href='../Connexion_page/login.php' aria-disabled='true'>Se connecter</a>";
                     } else { ?>

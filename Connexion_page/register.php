@@ -10,7 +10,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $Prenom = trim($_POST['Prenom']);
     $mdp = $_POST['mdp'];
     $confirm_mdp = $_POST['confirm_mdp'];
+
     $perm = 0;
+    if(isset($_POST['perm'])) {
+        $perm = $_POST['perm'];
+    }
 
     $check = $db->prepare("SELECT * FROM utilisateurs WHERE email = ?");
     $check->execute([$email]);
@@ -137,7 +141,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <label class="form-label big">Confirmer votre Mot de passe</label>
                     <input type="password" name="confirm_mdp" class="form-control bg-dark text-white border-secondary" placeholder="Confirmez le mot de passe" style="padding: 0.8rem;" required>
                 </div>
-            
+
+                <?php if (isset($_SESSION["id"]) && $_SESSION['role']>0) { ?>
+                    <div class="mb-3 text-start">
+                        <label class="form-label big">Indiquez la permission</label>
+                        <input type="number" name="perm" class="form-control bg-dark text-white border-secondary" placeholder="Entre 0 et 1" style="padding: 0.8rem;" min="0" max="2">
+                    </div>
+                <?php } ?>
+
 
                 <button class="btn btn-outline-light w-100 py-2 fw-bold mb-3 mt-3" type="submit" style="border-radius: 10px;">S'inscrire</button>
             </form>

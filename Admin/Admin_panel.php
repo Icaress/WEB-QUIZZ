@@ -73,7 +73,7 @@ $nb_categories = $db->query("SELECT COUNT(*) as total FROM catégorie")->fetch(P
                 <div class="desc">Gère les utilisateurs</div>
             </a>
             <?php if($_SESSION["role"] === 2): ?>
-            <a href="Sign_up.php" class="action-card">
+            <a href="../Connexion_page/register.php" class="action-card">
                 <div class="action-icon red">+</div>
                 <div class="title">Crée un administrateur</div>
                 <div class="desc">Ajouter un compte administrateur</div>
