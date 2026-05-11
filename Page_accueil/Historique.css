@@ -3,9 +3,140 @@
     font-weight: bold;
     font-style: italic;
     margin-top: 5%;
-    margin-left: 15%;
 }
-#titre_histo p{
+#titre_histo p {
     font-size: 35px;
-    margin-left: 15% ;
+}
+
+#Historique {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 0 5%;
+}
+
+#after_historique {
+    margin-left: 7%; 
+    margin-right: 7%;
+}
+
+#stats {
+    justify-content: space-between;
+    min-width: 852px;
+    max-width: 926px;
+}
+
+#stats div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #D9D9D9;
+    height: 197px;
+    width: 273px; 
+    border-radius: 40px;
+    font-size: 25px;
+}
+
+#after_historique div button {
+    background-color: #D9D9D9;
+    border-radius: 20px;
+    margin-top: 35px;
+    margin-bottom: 35px;
+    padding: 10px 50px;
+    font-size: 18px;
+}
+
+@media (max-width: 1328px){
+    #after_historique {
+        margin-left: 0%;
+        margin-right: 0%;
+    }
+}
+
+#filtre-toggle {
+    border: none;
+    display: none;
+}
+
+@media (min-width: 611px) {
+
+    #filtre-container {
+        display: block !important;
+    }
+}
+
+@media (max-width: 611px) {
+    #filtre-toggle {
+        display: block;
+    }
+
+    #filtre-container {
+        display: none;
+    }
+
+    #filtre-toggle {
+        margin-bottom: 5px !important;
+    }
+
+    #filtre-container button {
+        margin: 5px !important;
+    }
+}
+
+#filtre-container button {
+    margin-bottom: 0px !important;
+}
+
+.category_results {
+    display: flex;
+    justify-content: space-between;
+    background-color: #D9D9D9;
+    border-radius: 30px;
+    margin-bottom: 15px;
+    align-items: center;
+    padding: 20px 50px;
+}
+
+.cr-left {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.score-cercle {
+    border-radius: 50%;
+    width: 70px;
+    height: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.cr-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.cr-info p {
+    font-size: 18px;
+}
+
+.cr-right {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 5px;
+}
+
+.cr-right h2 {
+    margin: 0;
+    font-weight: bold;
+}
+
+.badge-result {
+    border-radius: 20px;
+    padding: 4px 15px;
+    font-size: 14px;
 }
