@@ -21,7 +21,8 @@
 
 #stats {
     justify-content: space-between;
-    min-width: 852px;
+    flex-wrap: wrap;
+    gap: 15px;
     max-width: 926px;
 }
 
