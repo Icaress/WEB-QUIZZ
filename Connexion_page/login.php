@@ -2,6 +2,8 @@
 
 require_once "../Configuration/config.php";
 
+$_SESSION["cooldown"] = (int)$db->query("SELECT time FROM timer")->fetchColumn();
+
 if (isset($_POST['email']) && isset($_POST['mdp'])) {
     $email = $_POST['email'];
     $password = $_POST['mdp'];

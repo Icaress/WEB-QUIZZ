@@ -63,6 +63,11 @@ $nb_categories = $db->query("SELECT COUNT(*) as total FROM catégorie")->fetch(P
                 <div class="title">Modifier le nom d'une catégorie</div>
                 <div class="desc">Modifier ou supprimer une catégorie</div>
             </a>
+            <a href="Modifier_timer.php" class="action-card">
+                <div class="action-icon green">✎</div>
+                <div class="title">Chonomètre</div>
+                <div class="desc">Modifier le temps d'une tentative</div>
+            </a>
         </div>
 
         <p class="section-title">Utilisateurs</p>

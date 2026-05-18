@@ -115,8 +115,17 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["end"])) {
     // header vers la page des résultats
     header("Location: ../Résultat/Résultat.php?tentative_id=$tentative_id"); 
     exit();
-    
 }
+
+$stmt = $db->prepare("SELECT date FROM tentatives WHERE utilisateur_id = ? ORDER BY date DESC LIMIT 1");
+$stmt-> execute([$utilisateur_id]);
+$past_db = $stmt->fetchColumn();
+
+$now = new DateTime();
+$past = new DateTime($past_db);
+$duration = $past->diff($now);
+$seconds_db = ($duration->days * 86400) + ($duration->h * 3600) + ($duration->i * 60) + $duration->s;
+$seconds = $_SERVER["cooldown"] - $seconds_db; 
 
 ?>
 
@@ -133,6 +142,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["end"])) {
     <link rel="stylesheet" href="../navbar/navbar.css">
     <link rel="stylesheet" href="../footer/footer.css">
     <link rel="stylesheet" href="quizz.css">
+    <script src="quizz.js" defer></script>
 </head>
 
 <body>
@@ -211,6 +221,11 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["end"])) {
 
     ?>
 
+    <div class="d-flex " id="chronometre">
+        <p>Time left : </p>
+        <div id="time_display"></div>
+    </div>
+
     <?php 
     foreach ($questions as $row_question) { ?>
         <section class="section" id="<?= $q ?>">
@@ -272,7 +287,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["end"])) {
             <input type="hidden" name="end" value="yes">
             <input type="hidden" name="tentative_id" value="<?= $tentative_id ?>">
 
-            <button type="submit">Terminer le quizz</button>
+            <button type="submit" id="end_quizz">Terminer le quizz</button>
         </form>
     </section>
 
@@ -288,6 +303,11 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["end"])) {
         <script>show('1')</script>
     
     <?php } ?>
+
+    <script>
+        let seconds = <?= $seconds ?> ;
+        let date = "<?= $date ?>";
+    </script>
 
 </body>
 

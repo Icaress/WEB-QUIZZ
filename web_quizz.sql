@@ -3,15 +3,18 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le : jeu. 07 mai 2026 à 11:28
+-- Généré le : lun. 18 mai 2026 à 22:01
 -- Version du serveur : 10.4.32-MariaDB
 -- Version de PHP : 8.2.12
+
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
 SET time_zone = "+00:00";
+
 DROP DATABASE IF EXISTS `web_quizz`;
 CREATE DATABASE `web_quizz`;
 USE `web_quizz`;
+
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -30,15 +33,19 @@ USE `web_quizz`;
 
 CREATE TABLE `catégorie` (
   `id` int(11) NOT NULL,
-  `nom` varchar(50) NOT NULL
+  `nom` varchar(50) NOT NULL,
+  `description` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Déchargement des données de la table `catégorie`
 --
 
-INSERT INTO `catégorie` (`id`, `nom`) VALUES
-(1, 'HTTP/CSS');
+INSERT INTO `catégorie` (`id`, `nom`, `description`) VALUES
+(1, 'HTML/CSS', ''),
+(2, 'Javascript', ''),
+(3, 'Base de donnée', ''),
+(5, 'Algorithmie', '');
 
 -- --------------------------------------------------------
 
@@ -189,8 +196,19 @@ CREATE TABLE `questions_en_cours` (
 --
 
 INSERT INTO `questions_en_cours` (`id`, `tentative_id`, `id_1`, `id_2`, `id_3`, `id_4`, `id_5`, `id_6`, `id_7`, `id_8`, `id_9`, `id_10`) VALUES
-(6, 10, 38, 50, 37, 46, 43, 34, 39, 48, 29, 30),
-(7, 12, 50, 30, 27, 42, 26, 28, 33, 49, 45, 29);
+(17, 24, 19, 22, 2, 16, 8, 20, 14, 12, 18, 24),
+(28, 43, 27, 29, 44, 48, 30, 35, 40, 46, 33, 36),
+(29, 45, 13, 25, 11, 6, 18, 5, 23, 2, 7, 9),
+(30, 71, 14, 4, 19, 20, 24, 16, 13, 7, 22, 8),
+(31, 72, 16, 3, 2, 9, 12, 17, 13, 11, 4, 7),
+(32, 73, 21, 23, 19, 22, 6, 20, 2, 9, 15, 7),
+(33, 74, 19, 8, 13, 20, 24, 23, 25, 2, 22, 12),
+(34, 75, 8, 5, 6, 22, 7, 15, 12, 9, 20, 24),
+(36, 78, 4, 23, 3, 19, 16, 20, 8, 25, 1, 17),
+(38, 83, 19, 9, 16, 14, 22, 2, 25, 7, 15, 8),
+(39, 85, 21, 11, 24, 22, 13, 16, 19, 9, 7, 15),
+(41, 88, 10, 7, 9, 15, 3, 20, 25, 19, 16, 12),
+(43, 90, 11, 3, 10, 25, 12, 19, 17, 24, 5, 8);
 
 -- --------------------------------------------------------
 
@@ -211,14 +229,56 @@ CREATE TABLE `reponses` (
 --
 
 INSERT INTO `reponses` (`id`, `tentative_id`, `question_id`, `reponse_utilisateur`, `correcte`) VALUES
-(11, 10, 38, 1, 2),
-(12, 10, 30, 2, 2),
-(13, 10, 39, 1, 3),
-(14, 10, 48, 2, 2),
-(15, 10, 46, 3, 1),
-(16, 10, 29, 3, 2),
-(17, 10, 34, 1, 1),
-(18, 10, 43, 4, 3);
+(23, 24, 19, 4, 4),
+(24, 24, 22, 2, 4),
+(25, 24, 2, 1, 1),
+(26, 24, 16, 1, 2),
+(27, 24, 8, 1, 1),
+(28, 24, 20, 3, 3),
+(29, 24, 14, 3, 3),
+(30, 24, 12, 4, 1),
+(31, 24, 18, 1, 2),
+(32, 24, 24, 2, 2),
+(40, 35, 13, 1, 4),
+(41, 35, 7, 1, 4),
+(42, 35, 19, 1, 4),
+(43, 35, 11, 1, 2),
+(44, 35, 23, 1, 1),
+(45, 35, 9, 1, 1),
+(46, 35, 4, 1, 3),
+(47, 35, 21, 1, 2),
+(48, 35, 5, 3, 3),
+(49, 35, 12, 4, 1),
+(50, 37, 8, 1, 1),
+(51, 37, 24, 2, 2),
+(52, 37, 22, 2, 4),
+(53, 37, 15, 4, 2),
+(54, 37, 23, 1, 1),
+(55, 37, 25, 1, 3),
+(56, 37, 6, 2, 2),
+(57, 37, 2, 1, 1),
+(58, 37, 7, 4, 4),
+(59, 37, 5, 3, 3),
+(60, 39, 33, 1, 4),
+(61, 39, 39, 4, 3),
+(62, 39, 38, 3, 2),
+(63, 39, 45, 2, 2),
+(64, 39, 37, 4, 3),
+(65, 39, 40, 2, 4),
+(66, 39, 36, 3, 2),
+(67, 39, 28, 4, 3),
+(68, 39, 32, 2, 3),
+(69, 39, 47, 3, 3),
+(70, 41, 10, 4, 3),
+(71, 41, 24, 2, 2),
+(72, 41, 11, 2, 2),
+(73, 41, 3, 2, 2),
+(74, 41, 18, 1, 2),
+(75, 41, 19, 1, 4),
+(76, 41, 12, 1, 1),
+(77, 41, 15, 1, 2),
+(78, 41, 6, 1, 2),
+(79, 41, 7, 1, 4);
 
 -- --------------------------------------------------------
 
@@ -229,7 +289,7 @@ INSERT INTO `reponses` (`id`, `tentative_id`, `question_id`, `reponse_utilisateu
 CREATE TABLE `tentatives` (
   `id` int(11) NOT NULL,
   `utilisateur_id` int(11) NOT NULL,
-  `score` float NOT NULL,
+  `score` float DEFAULT NULL,
   `date` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -238,9 +298,28 @@ CREATE TABLE `tentatives` (
 --
 
 INSERT INTO `tentatives` (`id`, `utilisateur_id`, `score`, `date`) VALUES
-(10, 2, 0, '2026-05-07 08:44:28'),
-(11, 2, 0, '2026-05-07 08:44:52'),
-(12, 2, 0, '2026-05-07 11:05:40');
+(24, 2, 6, '2026-05-07 17:47:50'),
+(35, 2, 3, '2026-05-08 18:43:20'),
+(37, 2, 7, '2026-05-09 00:24:30'),
+(39, 2, 2, '2026-05-11 17:53:14'),
+(41, 2, 4, '2026-05-11 19:49:19');
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `timer`
+--
+
+CREATE TABLE `timer` (
+  `time` int(10) NOT NULL DEFAULT 600
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Déchargement des données de la table `timer`
+--
+
+INSERT INTO `timer` (`time`) VALUES
+(600);
 
 -- --------------------------------------------------------
 
@@ -312,7 +391,7 @@ ALTER TABLE `utilisateurs`
 -- AUTO_INCREMENT pour la table `catégorie`
 --
 ALTER TABLE `catégorie`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT pour la table `questions`
@@ -324,19 +403,19 @@ ALTER TABLE `questions`
 -- AUTO_INCREMENT pour la table `questions_en_cours`
 --
 ALTER TABLE `questions_en_cours`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
 
 --
 -- AUTO_INCREMENT pour la table `reponses`
 --
 ALTER TABLE `reponses`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=97;
 
 --
 -- AUTO_INCREMENT pour la table `tentatives`
 --
 ALTER TABLE `tentatives`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=91;
 
 --
 -- AUTO_INCREMENT pour la table `utilisateurs`
