@@ -1,3 +1,13 @@
+<?php
+// Récupérer l'id de catégorie passé en GET
+$catégorie = $_GET['catégorie'] ?? null;
+
+if (!$catégorie) {
+    // Rediriger si pas de catégorie
+    header('Location: ../Page_accueil/Accueil.php');
+    exit;
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -32,7 +42,7 @@
         <div class="text-center p-4 rounded-5 mt-" id="desc_2">
             <p class="p1">Les Règles</p>
             <p class="p2_">-Le QCM sera lancé en pleine écran, si vous le quittez vous serez sanctionné .<br>-Si vous changer d’onglet cela sera détecter et vous serez également sanctionné.<br>-Le QCM aura un temp défini selon le créateur de celui-ci.<br>-Les pages ne seront pas modifiable ni sélectionnable durant le QCM.</p>
-            <button onclick="window.location.href='../Quizz/quizz.php'" class="btn">Commencer</button>
+            <button onclick="window.location.href='../Quizz/quizz.php?catégorie=<?php echo $catégorie; ?>'" class="btn">Commencer</button>
         </div>
     </section>
 </body>

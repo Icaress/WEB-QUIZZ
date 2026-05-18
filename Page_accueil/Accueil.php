@@ -87,8 +87,9 @@ $nb_categories = $db->query("SELECT COUNT(*) as total FROM catégorie")->fetch(P
                             echo '<a href="../Connexion_page/login.php">Commencer</a>';
                         }
                         else{
-                            echo '<a href="../Quizz/quizz.php?catégorie=' . $C["id"] . '">Commencer</a>';
+                            echo '<a href="../Page_règle/Règle.php?catégorie=' . $C["id"] . '">Commencer</a>';
                         }
+
                         ?>
                         
                     </div>
