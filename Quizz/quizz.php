@@ -224,7 +224,6 @@ $seconds = $cooldown_db - $seconds_db;
     ?>
 
     <div class="d-flex " id="chronometre">
-        <p>Time left : </p>
         <div id="time_display"></div>
     </div>
 

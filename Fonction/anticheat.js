@@ -84,7 +84,7 @@ let secondes = 10 * 60;
 const timerDiv = document.createElement("div");
 timerDiv.style.cssText = "position:fixed; top:10px; right:15px; background:#2e2e2e; color:white; padding:8px 16px; border-radius:10px; font-weight:bold; font-size:1rem; z-index:9998;";
 document.body.appendChild(timerDiv);
- 
+
 const interval = setInterval(function () {
     const m = Math.floor(secondes / 60).toString().padStart(2, "0");
     const s = (secondes % 60).toString().padStart(2, "0");
@@ -99,4 +99,3 @@ const interval = setInterval(function () {
     }
     secondes--;
 }, 1000);
- 
