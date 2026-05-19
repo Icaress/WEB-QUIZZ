@@ -78,24 +78,25 @@ document.addEventListener("visibilitychange", function() {
 });
 
 // Minuteur de 10 minutes
-
-let secondes = 10 * 60;
  
 const timerDiv = document.createElement("div");
 timerDiv.style.cssText = "position:fixed; top:10px; right:15px; background:#2e2e2e; color:white; padding:8px 16px; border-radius:10px; font-weight:bold; font-size:1rem; z-index:9998;";
 document.body.appendChild(timerDiv);
 
 const interval = setInterval(function () {
-    const m = Math.floor(secondes / 60).toString().padStart(2, "0");
-    const s = (secondes % 60).toString().padStart(2, "0");
-    timerDiv.textContent = "⏱ " + m + ":" + s;
+
+    seconds--;
+    const hrs = String(Math.floor(seconds / 3600)).padStart(2, "0");
+    const mins = String(Math.floor( (seconds % 3600) / 60)).padStart(2, "0");
+    const secs  = String(Math.floor(seconds % 60)).padStart(2, "0");
+    timerDiv.textContent = "⏱ " + mins + ":" + secs;
  
-    if (secondes <= 60) timerDiv.style.background = "#cc0000";
- 
-    if (secondes <= 0) {
+    if (seconds <= 60) timerDiv.style.background = "#cc0000";
+
+    if (seconds <= 0) {
         clearInterval(interval);
+        document.getElementById("end_quizz").click();
         alert("Temps écoulé ! La tentative est terminée.");
-        window.location.href = "../Page_accueil/Accueil.php";
+        clearInterval(timer);
     }
-    secondes--;
 }, 1000);

@@ -223,10 +223,6 @@ $seconds = $cooldown_db - $seconds_db;
 
     ?>
 
-    <div class="d-flex " id="chronometre">
-        <div id="time_display"></div>
-    </div>
-
     <?php 
     foreach ($questions as $row_question) { ?>
         <section class="section" id="<?= $q ?>">

@@ -2,8 +2,9 @@
 
 require_once "../Configuration/config.php";
 
-if(isset($_SESSION["cooldown"])){
-    $cooldown_db = $_SESSION["cooldown"];
+$cooldown_db = (int)$db->query("SELECT time FROM timer")->fetchColumn();
+
+if(isset($cooldown_db)){
     $hr = str_pad(floor($cooldown_db / 3600), 2, "0", STR_PAD_LEFT);
     $min = str_pad(floor(($cooldown_db % 3600) / 60), 2, "0", STR_PAD_LEFT);
     $sec = str_pad($cooldown_db % 60, 2, "0", STR_PAD_LEFT);
@@ -14,6 +15,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
     $seconds = ($time[0] * 3600) + ($time[1] * 60) + $time[2];
 
     $db->prepare("UPDATE timer SET time = ?")->execute([$seconds]);
+    header("Location: #");
 }
 
 ?>
