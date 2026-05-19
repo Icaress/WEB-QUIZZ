@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le : mar. 21 avr. 2026 à 17:26
+-- Généré le : mar. 28 avr. 2026 à 03:15
 -- Version du serveur : 10.4.32-MariaDB
 -- Version de PHP : 8.2.12
 
@@ -11,7 +11,6 @@ SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
 SET time_zone = "+00:00";
 
-DROP DATABASE IF EXISTS web-quizz;
 DROP DATABASE IF EXISTS web_quizz;
 CREATE DATABASE web_quizz;
 USE web_quizz;
@@ -50,7 +49,29 @@ CREATE TABLE `questions` (
   `reponse2` varchar(50) NOT NULL,
   `reponse3` varchar(50) NOT NULL,
   `reponse4` varchar(50) NOT NULL,
-  `bonne_reponse` int(11) NOT NULL
+  `bonne_reponse` int(11) NOT NULL,
+  `catégorie` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `questions_en_cours`
+--
+
+CREATE TABLE `questions_en_cours` (
+  `id` int(11) NOT NULL,
+  `tentative_id` int(1) NOT NULL,
+  `id_1` int(1) NOT NULL,
+  `id_2` int(1) NOT NULL,
+  `id_3` int(1) NOT NULL,
+  `id_4` int(1) NOT NULL,
+  `id_5` int(1) NOT NULL,
+  `id_6` int(1) NOT NULL,
+  `id_7` int(1) NOT NULL,
+  `id_8` int(1) NOT NULL,
+  `id_9` int(1) NOT NULL,
+  `id_10` int(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -112,6 +133,12 @@ ALTER TABLE `questions`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Index pour la table `questions_en_cours`
+--
+ALTER TABLE `questions_en_cours`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Index pour la table `reponses`
 --
 ALTER TABLE `reponses`
@@ -143,6 +170,12 @@ ALTER TABLE `catégorie`
 -- AUTO_INCREMENT pour la table `questions`
 --
 ALTER TABLE `questions`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT pour la table `questions_en_cours`
+--
+ALTER TABLE `questions_en_cours`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
@@ -161,7 +194,7 @@ ALTER TABLE `tentatives`
 -- AUTO_INCREMENT pour la table `utilisateurs`
 --
 ALTER TABLE `utilisateurs`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

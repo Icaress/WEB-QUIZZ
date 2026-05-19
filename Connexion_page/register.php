@@ -29,27 +29,27 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         
         /*rule_length*/ 
         if (strlen($mdp) < 12){
-            $wrong .= "• The password need to have more or equal to 12 character ! <br>";
+            $wrong .= "• The password needs to have at least 12 characters ! <br>";
         }
 
         /*rule_number*/
         if(!preg_match('/\d/',$mdp)){
-            $wrong .= "• The password doesn't have number ! <br>";
+            $wrong .= "• The password doesn't have a number ! <br>";
         }
 
         /*rule_uppercase*/
         if(!preg_match('/[A-Z]/',$mdp)){
-            $wrong .= "• The password doesn't have any uppercase letters ! <br>";
+            $wrong .= "• The password doesn't have an uppercase letter ! <br>";
         }
 
         /*rule_symbol*/
         if(!preg_match('/[&?#\/*%]/',$mdp)){
-            $wrong .= "• The password doesn't have any of the required symbol & ? # \ / * % <br>";
+            $wrong .= "• The password doesn't have any of the required symbols : &emsp; & ? # \ / * % <br>";
         }
 
         /*comfirm*/
         if($mdp !== $confirm_mdp){
-            $wrong .= "• The confirm password is not the same as the password ! <br>";
+            $wrong .= "• The password confirmation is not the same as the password ! <br>";
         }
         
         if($wrong == ""){
@@ -134,7 +134,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 </div>
 
                 <div class="mb-3 text-start">
-                    <label class="form-label big">Mot de passe</label>
+                    <label class="form-label big">Confirmer votre Mot de passe</label>
                     <input type="password" name="confirm_mdp" class="form-control bg-dark text-white border-secondary" placeholder="Confirmez le mot de passe" style="padding: 0.8rem;" required>
                 </div>
             
