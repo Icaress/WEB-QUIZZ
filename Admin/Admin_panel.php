@@ -1,5 +1,5 @@
 <?php
-session_start();
+
 require_once "../Configuration/config.php";
 //require_once '../Configuration/Perm_verif.php';
 
@@ -63,6 +63,11 @@ $nb_categories = $db->query("SELECT COUNT(*) as total FROM catégorie")->fetch(P
                 <div class="title">Modifier le nom d'une catégorie</div>
                 <div class="desc">Modifier ou supprimer une catégorie</div>
             </a>
+            <a href="Modifier_timer.php" class="action-card">
+                <div class="action-icon green">✎</div>
+                <div class="title">Chonomètre</div>
+                <div class="desc">Modifier le temps d'une tentative</div>
+            </a>
         </div>
 
         <p class="section-title">Utilisateurs</p>
@@ -72,8 +77,8 @@ $nb_categories = $db->query("SELECT COUNT(*) as total FROM catégorie")->fetch(P
                 <div class="title">Voir tout les utilisateurs</div>
                 <div class="desc">Gère les utilisateurs</div>
             </a>
-            <?php if($_SESSION["perm"] === 2): ?>
-            <a href="Sign_up.php" class="action-card">
+            <?php if($_SESSION["role"] === 2): ?>
+            <a href="../Connexion_page/register.php" class="action-card">
                 <div class="action-icon red">+</div>
                 <div class="title">Crée un administrateur</div>
                 <div class="desc">Ajouter un compte administrateur</div>

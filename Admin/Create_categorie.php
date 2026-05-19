@@ -4,6 +4,7 @@ require_once '../Configuration/config.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST"){
     $nom = trim($_POST["nom"]);
+    $description = trim($_POST["description"]);
 
     
     $check = $db->prepare("SELECT * FROM catégorie WHERE nom=?");
@@ -15,8 +16,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
     } 
     else {    
     try {
-        $stmt = $db->prepare("INSERT INTO catégorie(nom) VALUES (?)");
-        $stmt->execute([$nom]);
+        $stmt = $db->prepare("INSERT INTO catégorie(nom,description) VALUES (?, ?)");
+        $stmt->execute([$nom,$description]);
         header("Location: Admin_panel.php");
         exit();
     } catch (PDOException $e) {
@@ -43,6 +44,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
         <div id='nom_catégorie'>
             <label for="nom">Nom de la catégorie</label>
             <input type="text" name='nom' placeholder='Ex : Science' required>
+        </div>
+        <div id='nom_catégorie'>
+            <label for="description">Description</label>
+            <input type="text" name='description' placeholder='Ex : Catégorie pour les questions de science' >
         </div>
         <input type="submit" value='Crée une catégorie' >
     </form>

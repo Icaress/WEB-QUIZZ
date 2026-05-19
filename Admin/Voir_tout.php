@@ -38,10 +38,10 @@ if(isset($_POST['delete'])){
     <?php foreach($questions as $q): ?>
         <details>
             <summary><?= $q['question'] ?></summary>
-            <p>Réponse 1 : <?= $q['reponse1'] ?></p>
-            <p>Réponse 2 : <?= $q['reponse2'] ?></p>
-            <p>Réponse 3 : <?= $q['reponse3'] ?></p>
-            <p>Réponse 4 : <?= $q['reponse4'] ?></p>
+            <p>Réponse 1 : <?= htmlspecialchars($q['reponse1']) ?></p>
+            <p>Réponse 2 : <?= htmlspecialchars($q['reponse2']) ?></p>
+            <p>Réponse 3 : <?= htmlspecialchars($q['reponse3']) ?></p>
+            <p>Réponse 4 : <?= htmlspecialchars($q['reponse4']) ?></p>
             <p>Bonne réponse : <?= $q['bonne_reponse'] ?></p>
 
             <div class="actions">
@@ -53,7 +53,7 @@ if(isset($_POST['delete'])){
             </div> 
         </details>
 
-        <?php endforeach; ?>
+    <?php endforeach; ?>
 <?php endif; ?>
 </body>
 </html>

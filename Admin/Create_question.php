@@ -68,7 +68,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST"){
         </div>
         <div class="question_input">
             <label for="BonneRep">Bonne Réponse</label>
-            <input type="number" name="BonneRep" min="1" max="4" step="1" required>
+            <input type="number" name="BonneRep" min="1" max="4" step="1" placeholder="Un chiffre entre 1 et 4" required>
         </div>
         <label for="categorie_id" id="lab">Veuillez saisir la catégorie de la question</label>
         <select name="categorie_id" required>
