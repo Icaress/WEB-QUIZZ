@@ -1,0 +1,29 @@
+div {
+    min-height: 70vh ;
+}
+
+div h1 {
+    font-size: 58px;
+}
+
+div p {
+    font-size: 42px;
+}
+
+input {
+    font-size: 25px;
+    border-radius: 15px;
+    padding: 8px;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+label {
+    font-size: 35px;
+}
+
+button {
+    font-size: 25px;
+    padding: 8px;
+    border-radius: 15px;
+}
