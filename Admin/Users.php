@@ -1,15 +1,34 @@
 <?php
+
 require_once "../Configuration/config.php";
+require_once "../Configuration/Perm_verif.php";
 
 // Suppression
 if(isset($_GET["supprimer"])){
     $stmt = $db->prepare("DELETE FROM utilisateurs WHERE id = ?");
     $stmt->execute([$_GET["supprimer"]]);
-    header("Location: gestion_users.php");
+    header("Location: Users.php");
     exit();
 }
 
-$stmt = $db->query("SELECT id, nom, prenom, email, role FROM utilisateurs");
+if(isset($_GET["ban"])){
+    if($_GET["ban"] == $_SESSION["id"]){
+        echo "<script>window.alert('Vous ne pouvez pas vous self-ban');</script>";
+    } else if ($_GET["role"] >= $_SESSION["role"]) {
+        echo "<script>window.alert(\"Vous n'avez pas la permission\");</script>";
+    } else {
+        if($_GET["situation"] == 0){ $situation = 1; }
+        else { $situation = 0 ; }
+        $stmt = $db->prepare("UPDATE utilisateurs SET ban = ? WHERE id = ?");
+        $stmt->execute([$situation, $_GET["ban"]]);
+        header("Location: Users.php");
+        exit();
+    }
+}
+
+// Ban et unban
+
+$stmt = $db->query("SELECT id, nom, prenom, email, role, ban FROM utilisateurs");
 $utilisateurs = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
@@ -32,6 +51,7 @@ $utilisateurs = $stmt->fetchAll(PDO::FETCH_ASSOC);
             <th>Prénom</th>
             <th>Email</th>
             <th>Rôle</th>
+            <th>Ban</th>
             <th>Action</th>
         </tr>
     </thead>
@@ -47,6 +67,18 @@ $utilisateurs = $stmt->fetchAll(PDO::FETCH_ASSOC);
                         <?= $user["role"] == 2 ? "Admin" : "Utilisateur" ?>
                     </span>
                 </td>
+
+                <td>
+                    <a href="?ban=<?= $user["id"] ?>&perm=<?= $user["role"] ?>&situation=<?= $user["ban"] ?>"
+                        onclick="return confirm('<?= $user['ban'] == 0 ? 'Ban' : 'Unban' ?> <?= htmlspecialchars($user['prenom']) ?> <?= htmlspecialchars($user['nom']) ?> ?')">
+                        <button class="btn-supprimer" style="background: #2a4db5;">
+                            <?php if($user["ban"]==0) { echo "Ban";} 
+                                else { echo "Unban";} ?>
+                        </button>
+                    </a>
+                </td>
+
+                <?php // WTF is this dude <(＿　＿)>?>
                 <td>
                     <a href="?supprimer=<?= $user["id"] ?>" 
                        onclick="return confirm('Supprimer <?= htmlspecialchars($user["prenom"]) ?> <?= htmlspecialchars($user["nom"]) ?> ?')">

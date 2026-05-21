@@ -3,6 +3,7 @@
 date_default_timezone_set('Europe/Paris');
 
 require "../Configuration/config.php";
+require_once "../Configuration/Ban_verif.php";
 
 if(isset($_GET["tentative_id"])){
 

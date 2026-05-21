@@ -17,7 +17,9 @@ if (isset($_POST['email']) && isset($_POST['mdp'])) {
         $_SESSION['id'] = $user['id'];
         $_SESSION['nom'] = $user['nom'];
         $_SESSION['prenom'] = $user['prenom'];
+        $_SESSION['email'] = $user['email'];
         $_SESSION['role'] = $user['role'];
+        $_SESSION['ban'] = $user['ban'];
         header("Location: ../Page_accueil/Accueil.php");
         exit();
     } else {

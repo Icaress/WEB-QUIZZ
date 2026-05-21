@@ -1,7 +1,7 @@
 <?php
 
 require_once "../Configuration/config.php";
-//require_once '../Configuration/Perm_verif.php';
+require_once '../Configuration/Perm_verif.php';
 
 
 $nb_users    = $db->query("SELECT COUNT(*) as total FROM utilisateurs")->fetch(PDO::FETCH_ASSOC)['total'];

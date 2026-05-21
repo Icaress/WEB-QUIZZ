@@ -102,4 +102,4 @@ tbody tr:hover { background: #fafafa; }
     transition: background 0.2s;
 }
 
-.btn-supprimer:hover { background: #ef4444; }
+.btn-supprimer:hover { background: #ef4444 !important ; }

@@ -5,6 +5,7 @@ error_reporting(E_ALL);
 date_default_timezone_set('Europe/Paris');
 
 require "../Configuration/config.php";
+require_once "../Configuration/Ban_verif.php";
 
 $utilisateur_id = $_SESSION["id"];
 

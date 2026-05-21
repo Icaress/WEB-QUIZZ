@@ -1,6 +1,7 @@
 <?php
 
 require_once "../Configuration/config.php";
+require_once "../Configuration/Perm_verif.php";
 
 $cooldown_db = (int)$db->query("SELECT time FROM timer")->fetchColumn();
 

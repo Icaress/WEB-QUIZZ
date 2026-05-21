@@ -1,5 +1,6 @@
 <?php
 require_once '../Configuration/config.php';
+require_once "../Configuration/Perm_verif.php";
 
 $categories = $db->query("SELECT * FROM catégorie")->fetchAll(PDO::FETCH_ASSOC);
 

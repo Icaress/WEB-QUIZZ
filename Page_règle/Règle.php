@@ -1,4 +1,8 @@
 <?php
+
+require_once "../Configuration/config.php";
+require_once "../Configuration/Ban_verif.php";
+
 // Récupérer l'id de catégorie passé en GET
 $catégorie = $_GET['catégorie'] ?? null;
 
@@ -7,6 +11,7 @@ if (!$catégorie) {
     header('Location: ../Page_accueil/Accueil.php');
     exit;
 }
+
 ?>
 <!DOCTYPE html>
 <html lang="en">

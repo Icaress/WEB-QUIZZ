@@ -7,7 +7,9 @@ if (!isset($_SESSION['id'])) {
     exit();
 }
 
-
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    require_once "update_profile.php";
+}
 
 ?>
 <!DOCTYPE html>
@@ -128,7 +130,7 @@ if (!isset($_SESSION['id'])) {
                             <i class="fa-solid fa-triangle-exclamation me-2"></i> Erreur lors de la mise à jour.
                             </div>
                         <?php endif; ?>
-                        <form action="../Settings/update_profile.php" method="POST">
+                        <form action="" method="POST">
                             
                             <div class="form-floating mb-4">
                                 <input type="text" class="form-control" id="name" name="name" placeholder="Nom" value="<?= htmlspecialchars($_SESSION['nom']) ?>">
