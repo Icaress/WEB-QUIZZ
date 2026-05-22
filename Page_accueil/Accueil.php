@@ -73,36 +73,69 @@ $nb_categories = $db->query("SELECT COUNT(*) as total FROM catégorie")->fetch(P
             ORDER BY avg_score DESC
             LIMIT 5
         ");
-        $temp->execute();
+$temp->execute();
         $classement = $temp->fetchAll(PDO::FETCH_ASSOC);
         ?>
-        <div class="row justify-content-center align-items-center my-5 w-100">
-            <p class="classement text-center">🏆 Classement</p>
-                <div class="text-white p-3 m-0" id="classement">
-        <?php 
-        $medals = ['🥇', '🥈', '🥉', '4️⃣', '5️⃣'];
-        foreach ($classement as $index => $joueur): 
-            $isCurrentUser = $joueur['id'] == $user_id;
-        ?>
-            <div class="d-flex justify-content-between align-items-center p-2 mb-2 rounded
-                        <?= $isCurrentUser ? 'border border-warning' : '' ?>">
-                <span><?= $medals[$index] ?> <?= htmlspecialchars($joueur['nom']) ?>
-                    <?= $isCurrentUser ? '<small class="text-warning">(vous)</small>' : '' ?>
-                </span>
-                <span class="text-warning fw-bold">
-                    <?= number_format($joueur['avg_score'], 1) ?> pts moy.
-                </span>
-                <span class="text-muted small">
-                    <?= $joueur['total_tentatives'] ?> tentative<?= $joueur['total_tentatives'] > 1 ? 's' : '' ?>
-                </span>
-            </div>
-        <?php endforeach; ?>
 
-        <?php if (empty($classement)): ?>
-            <p class="text-center text-muted">Aucun résultat pour le moment.</p>
-        <?php endif; ?>
-    </div>
-</div>
+        <div class="row justify-content-center my-5 w-100 m-0">
+            <div class="col-15 col-md-8 col-lg-10">
+                <div class="card bg-border text-white border-secondary shadow-lg rounded-4 overflow-hidden">
+                    
+                    <div class="card-header border-secondary bg-gradient p-3 text-center" style="background-color: #868686;">
+                        <h3 class="m-0 fw-bold tracking-wide" style="font-size: 1.6rem; color: #ffc107;">🏆 Classement Top 5</h3>
+                        <p class="text-muted small m-0 mt-1">Les meilleurs joueurs selon leur moyenne de points</p>
+                    </div>
+
+                    <div class="card-body p-3" style="background-color: #858585;">
+                        <?php 
+                        $medals = ['🥇', '🥈', '🥉', '4️⃣', '5️⃣'];
+                        foreach ($classement as $index => $joueur): 
+                            $isCurrentUser = $joueur['id'] == $user_id;
+                            // Style spécial si c'est l'utilisateur connecté
+                            $rowStyle = $isCurrentUser 
+                                ? 'background: linear-gradient(90deg, rgba(255, 193, 7, 0.15), rgba(0,0,0,0)); border: 1px solid #ffc107;' 
+                                : 'background: #878787; border: 1px solid #2d2d2d;';
+                        ?>
+                            <div class="d-flex justify-content-between align-items-center p-3 mb-2 rounded-3 shadow-sm transition-all" 
+                                 style="<?= $rowStyle ?>">
+                                
+                                <div class="d-flex align-items-center">
+                                    <span class="fs-4 me-3" style="min-width: 30px; text-align: center;"><?= $medals[$index] ?></span>
+                                    <div>
+                                        <span class="fw-semibold <?= $isCurrentUser ? 'text-warning fs-5' : 'text-light' ?>">
+                                            <?= htmlspecialchars($joueur['nom']) ?>
+                                        </span>
+                                        <?php if ($isCurrentUser): ?>
+                                            <span class="badge bg-warning text-dark ms-1" style="font-size: 0.65rem; vertical-align: middle;">VOUS</span>
+                                        <?php endif; ?>
+                                        <div class="text-muted" style="font-size: 0.75rem;">
+                                            <?= $joueur['total_tentatives'] ?> tentative<?= $joueur['total_tentatives'] > 1 ? 's' : '' ?>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="text-end">
+                                    <div class="fw-bold text-warning fs-5">
+                                        <?= number_format($joueur['avg_score'], 1) ?> <span class="small fw-normal text-muted" style="font-size: 0.8rem;">pts moy.</span>
+                                    </div>
+                                    <div class="text-muted" style="font-size: 0.7rem;">
+                                        Record : <span class="text-success fw-bold"><?= $joueur['max_score'] ?>/10</span>
+                                    </div>
+                                </div>
+
+                            </div>
+                        <?php endforeach; ?>
+
+                        <?php if (empty($classement)): ?>
+                            <div class="text-center py-4">
+                                <p class="text-muted m-0">Aucun résultat enregistré pour le moment. Soyez le premier ! 🚀</p>
+                            </div>
+                        <?php endif; ?>
+                    </div>
+
+                </div>
+            </div>
+        </div>
 
     </section>
 
