@@ -6,6 +6,11 @@ if(isset($_SESSION["id"])){
     $user_id = $_SESSION["id"];
 }
 
+if(isset($_GET["banned"])){
+    echo "<h1 style='color: #ff0000dd;'>The hammer of justice has fallen on you !!!</h1>
+            <h4 style='color: #ff0000dd;'>You are still banned from doing any quizz ... Please behave well when it will be lifted :)</h4>";
+}
+
 $categories = $db->query("SELECT * FROM `catégorie`")->fetchAll(PDO::FETCH_ASSOC);
 
 $nb_users    = $db->query("SELECT COUNT(*) as total FROM utilisateurs")->fetch(PDO::FETCH_ASSOC)['total'];
@@ -87,8 +92,9 @@ $nb_categories = $db->query("SELECT COUNT(*) as total FROM catégorie")->fetch(P
                             echo '<a href="../Connexion_page/login.php">Commencer</a>';
                         }
                         else{
-                            echo '<a href="../Quizz/quizz.php?catégorie=' . $C["id"] . '">Commencer</a>';
+                            echo '<a href="../Page_règle/Règle.php?catégorie=' . $C["id"] . '">Commencer</a>';
                         }
+
                         ?>
                         
                     </div>

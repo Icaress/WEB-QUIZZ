@@ -1,7 +1,7 @@
 <?php
 
 require_once "../Configuration/config.php";
-//require_once '../Configuration/Perm_verif.php';
+require_once '../Configuration/Perm_verif.php';
 
 
 $nb_users    = $db->query("SELECT COUNT(*) as total FROM utilisateurs")->fetch(PDO::FETCH_ASSOC)['total'];
@@ -62,6 +62,11 @@ $nb_categories = $db->query("SELECT COUNT(*) as total FROM catégorie")->fetch(P
                 <div class="action-icon green">✎</div>
                 <div class="title">Modifier le nom d'une catégorie</div>
                 <div class="desc">Modifier ou supprimer une catégorie</div>
+            </a>
+            <a href="Modifier_timer.php" class="action-card">
+                <div class="action-icon green">✎</div>
+                <div class="title">Chonomètre</div>
+                <div class="desc">Modifier le temps d'une tentative</div>
             </a>
         </div>
 

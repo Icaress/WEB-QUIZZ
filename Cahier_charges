@@ -1,1 +1,9 @@
-Ajouter une vérification si l'utilisateur a déjà confirmé une réponse, et faire un update
+UTILISATEUR
+settings
+Classement
+Pages avant le début du qcm (règles, catégorie et confirmation du début du qcm)
+
+ADMIN
+voir les utilisateurs
+supprimer les utilisateurs
+Bloquer un utilisateur (ajouter un ban dans la bdd, si on a le temps, on peut même ajouter un cooldown)

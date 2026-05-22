@@ -5,6 +5,7 @@ error_reporting(E_ALL);
 date_default_timezone_set('Europe/Paris');
 
 require "../Configuration/config.php";
+require_once "../Configuration/Ban_verif.php";
 
 $utilisateur_id = $_SESSION["id"];
 
@@ -115,8 +116,19 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["end"])) {
     // header vers la page des résultats
     header("Location: ../Résultat/Résultat.php?tentative_id=$tentative_id"); 
     exit();
-    
 }
+
+$cooldown_db = (int)$db->query("SELECT time FROM timer")->fetchColumn();
+
+$stmt = $db->prepare("SELECT date FROM tentatives WHERE utilisateur_id = ? ORDER BY date DESC LIMIT 1");
+$stmt-> execute([$utilisateur_id]);
+$past_db = $stmt->fetchColumn();
+
+$now = new DateTime();
+$past = new DateTime($past_db);
+$duration = $past->diff($now);
+$seconds_db = ($duration->days * 86400) + ($duration->h * 3600) + ($duration->i * 60) + $duration->s;
+$seconds = $cooldown_db - $seconds_db; 
 
 ?>
 
@@ -133,6 +145,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["end"])) {
     <link rel="stylesheet" href="../navbar/navbar.css">
     <link rel="stylesheet" href="../footer/footer.css">
     <link rel="stylesheet" href="quizz.css">
+    <script src="quizz.js" defer></script>
 </head>
 
 <body>
@@ -215,7 +228,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["end"])) {
     foreach ($questions as $row_question) { ?>
         <section class="section" id="<?= $q ?>">
 
-            <form action="" method="post">
+            <form action="" method="post" class="quizz_form">
 
                 <p id='title'><?= htmlspecialchars($row_question["question"]) ?></p>
 
@@ -266,16 +279,16 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["end"])) {
     ?>
 
     <section class="section" id="terminer">
-        <form action="" method="post">
+        <form action="" method="post" class="quizz_form">
             <h2>Tu as répondu à toutes les questions ! 🎉</h2>
             <p>Vérifie bien tes réponses avant de valider, tu ne pourras plus les modifier.</p>
             <input type="hidden" name="end" value="yes">
             <input type="hidden" name="tentative_id" value="<?= $tentative_id ?>">
 
-            <button type="submit">Terminer le quizz</button>
+            <button type="submit" id="end_quizz">Terminer le quizz</button>
         </form>
     </section>
-
+    
     <?php // ajouter une variable qui active un show (suivant la dernière réponse remplie) 
     
     if(isset($_GET["section"])){ 
@@ -288,6 +301,11 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["end"])) {
         <script>show('1')</script>
     
     <?php } ?>
+
+    <script>
+        let seconds = <?= $seconds ?> ;
+        let date = "<?= $date ?>";
+    </script>
 
 </body>
 

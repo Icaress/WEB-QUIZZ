@@ -1,6 +1,6 @@
 <?php
 require_once '../Configuration/config.php';
-//require_once '../Configuration/Perm_verif.php';
+require_once '../Configuration/Perm_verif.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST"){
     $nom = trim($_POST["nom"]);
