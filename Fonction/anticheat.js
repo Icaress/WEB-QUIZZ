@@ -15,7 +15,7 @@ setTimeout(() => { pageJustLoaded = false; }, 1500);
 document.querySelectorAll(".quizz-form").forEach(form => {
     form.addEventListener("submit", () => {
         isSubmitting = true;
-    });
+    }); 
 });
 
 window.addEventListener("beforeunload", () => {
@@ -84,11 +84,7 @@ if (!document.fullscreenElement) {
         });
 }
 
-<<<<<<< HEAD
-// ── Plein écran ──────────────────────────────────────────────
-=======
 // ── Gestion du Plein écran (Pendant le jeu) ───────────────────────────
->>>>>>> 024e711a2b864f0db94d1f457ade0a9b63bf517d
 document.addEventListener("fullscreenchange", function () {
     if (isSubmitting || pageJustLoaded || isAlerting) return;
 
