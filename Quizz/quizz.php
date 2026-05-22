@@ -140,11 +140,9 @@ $seconds = $cooldown_db - $seconds_db;
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
     <script src='../Fonction/show.js'></script>
-<<<<<<< HEAD
-    <?php //<script src="../Fonction/anticheat.js" defer></script> ?>
-=======
-    <script src="../Fonction/anticheat.js" defer></script>
->>>>>>> aac74eeae4a65c04175e80254b61839ecde88693
+
+    <script src="../Fonction/anticheat.js" defer></script> 
+
     <link rel="stylesheet" href="../navbar/navbar.css">
     <link rel="stylesheet" href="../footer/footer.css">
     <link rel="stylesheet" href="quizz.css">
@@ -234,15 +232,38 @@ $seconds = $cooldown_db - $seconds_db;
 
     <?php 
     foreach ($questions as $row_question) { ?>
+        <script>
+document.addEventListener("submit", function(e) {
+    if (e.target && e.target.classList.contains("quizz-form-validation")) {
+        sessionStorage.setItem("changement_page_legitime", "true");
+    }
+});
+</script>
+
+<?php 
+foreach ($questions as $row_question) { ?>
+    <script>
+    document.addEventListener("submit", function(e) {
+        if (e.target && e.target.classList.contains("quizz-form-validation")) {
+            sessionStorage.setItem("changement_page_legitime", "true");
+        }
+    });
+    </script>
+
+    <?php 
+    // ⚠️ TRÈS IMPORTANT : On réinitialise le compteur de question ici
+    $q = 1; 
+
+    foreach ($questions as $row_question) { ?>
         <section class="section" id="<?= $q ?>">
 
-            <form action="" method="post">
+            <form action="" method="post" class="quizz-form-validation">
 
                 <p id='title'><?= htmlspecialchars($row_question["question"]) ?></p>
 
                 <div>
                     <p>
-                        <input type="radio" name="reponse" value="1" id="<?=$q?>1">
+                        <input type="radio" name="reponse" value="1" id="<?=$q?>1" required>
                         <label for="<?=$q?>1">A) <?= htmlspecialchars($row_question["reponse1"]) ?></label>
                     </p>
                 </div>
@@ -273,16 +294,18 @@ $seconds = $cooldown_db - $seconds_db;
                 <input type="hidden" name="correcte" value="<?= $row_question["bonne_reponse"] ?>">
                 <input type="hidden" name="date" value="<?= $date ?>">
                 <input type="hidden" name="next_section" value="<?= $q+1 ?>">
-
-                <button type="submit">Répondre</button>
-
+                
+                <button type="submit" class="btn btn-primary" id="btn-suivant">Répondre</button>
             </form>
 
         </section>
         
-    <?php $q++;
-
+    <?php 
+        // On passe à la question suivante
+        $q++;
     } 
+    ?>
+
     
     ?>
 
