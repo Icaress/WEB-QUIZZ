@@ -54,23 +54,56 @@ $nb_categories = $db->query("SELECT COUNT(*) as total FROM catégorie")->fetch(P
                 <button onclick="show('QUIZZ')" class="btn">Commencer le quiz</button>
         </div>
 
-            <div class="info">
-                <div> <p class="big"><?= $nb_questions ?></p> <p>questions</p> </div>
-                <div> <p class="big"><?= $nb_users?></p> <p>Joueurs</p> </div>
-                <div> <p class="big"><?= $nb_categories?></p> <p>Catégories</p> </div>
-            </div>
-
-            <div class="row justify-content-center align-items-center my-5 w-100">
-                <p class="classement text-center">🏆 Classement</p>
-                <div class="bg-dark text-white p-3 m-0" id="classement">
-                    <p class="d-flex justify-content-between">
-                        1 &emsp; Alex L. 
-                        <span>9 840 pts</span>
-                    </p>
-                </div>
-            </div>
-
+        <div class="info">
+            <div> <p class="big"><?= $nb_questions ?></p> <p>questions</p> </div>
+            <div> <p class="big"><?= $nb_users?></p> <p>Joueurs</p> </div>
+            <div> <p class="big"><?= $nb_categories?></p> <p>Catégories</p> </div>
         </div>
+        <?php
+        $temp = $db->prepare("
+            SELECT 
+            utilisateurs.nom,
+            utilisateurs.id,
+            COUNT(*) AS total_tentatives,
+            AVG(tentatives.score) AS avg_score,
+            MAX(tentatives.score) AS max_score
+            FROM tentatives
+            JOIN utilisateurs ON utilisateurs.id = tentatives.utilisateur_id
+            GROUP BY tentatives.utilisateur_id, utilisateurs.nom, utilisateurs.id
+            ORDER BY avg_score DESC
+            LIMIT 5
+        ");
+        $temp->execute();
+        $classement = $temp->fetchAll(PDO::FETCH_ASSOC);
+        ?>
+        <div class="row justify-content-center align-items-center my-5 w-100">
+            <p class="classement text-center">🏆 Classement</p>
+                <div class="text-white p-3 m-0" id="classement">
+        <?php 
+        $medals = ['🥇', '🥈', '🥉', '4️⃣', '5️⃣'];
+        foreach ($classement as $index => $joueur): 
+            $isCurrentUser = $joueur['id'] == $user_id;
+        ?>
+            <div class="d-flex justify-content-between align-items-center p-2 mb-2 rounded
+                        <?= $isCurrentUser ? 'border border-warning' : '' ?>">
+                <span><?= $medals[$index] ?> <?= htmlspecialchars($joueur['nom']) ?>
+                    <?= $isCurrentUser ? '<small class="text-warning">(vous)</small>' : '' ?>
+                </span>
+                <span class="text-warning fw-bold">
+                    <?= number_format($joueur['avg_score'], 1) ?> pts moy.
+                </span>
+                <span class="text-muted small">
+                    <?= $joueur['total_tentatives'] ?> tentative<?= $joueur['total_tentatives'] > 1 ? 's' : '' ?>
+                </span>
+            </div>
+        <?php endforeach; ?>
+
+        <?php if (empty($classement)): ?>
+            <p class="text-center text-muted">Aucun résultat pour le moment.</p>
+        <?php endif; ?>
+    </div>
+</div>
+
     </section>
 
     <?php //Quizz ?>
