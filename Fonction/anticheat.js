@@ -32,7 +32,6 @@ document.getElementById("at-btn").addEventListener("click", function () {
 });
  
 function afficherOverlay(message) {
-    document.getElementById("at-msg").textContent = message;
     const msg = document.getElementById("at-msg");
     msg.textContent = message;
     msg.style.color = "#ff4d4d";
@@ -42,7 +41,7 @@ function afficherOverlay(message) {
 function cacherOverlay() {
     overlay.style.display = "none";
 }
- 
+
 // ── Plein écran ──────────────────────────────────────────────
 document.addEventListener("fullscreenchange", function () {
     console.log("fullscreenchange déclenché, fullscreenElement:", document.fullscreenElement);

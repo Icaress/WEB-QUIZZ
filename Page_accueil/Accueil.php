@@ -60,29 +60,27 @@ $nb_categories = $db->query("SELECT COUNT(*) as total FROM catégorie")->fetch(P
             <div> <p class="big"><?= $nb_categories?></p> <p>Catégories</p> </div>
         </div>
         <?php
-        $temp = $db->prepare("
-            SELECT 
-            utilisateurs.nom,
-            utilisateurs.id,
-            COUNT(*) AS total_tentatives,
-            AVG(tentatives.score) AS avg_score,
-            MAX(tentatives.score) AS max_score
-            FROM tentatives
-            JOIN utilisateurs ON utilisateurs.id = tentatives.utilisateur_id
-            GROUP BY tentatives.utilisateur_id, utilisateurs.nom, utilisateurs.id
-            ORDER BY avg_score DESC
-            LIMIT 5
+        $temp = $db->prepare("SELECT utilisateurs.nom, 
+                                    utilisateurs.id AS utilisateur_id,
+                                    COUNT(*) AS total_tentatives,
+                                    AVG(tentatives.score) AS avg_score,
+                                    MAX(tentatives.score) AS max_score
+                            FROM tentatives
+                            JOIN utilisateurs ON utilisateurs.id = tentatives.utilisateur_id
+                            GROUP BY tentatives.utilisateur_id, utilisateurs.nom, utilisateurs.id
+                            ORDER BY avg_score DESC
+                            LIMIT 5
         ");
         $temp->execute();
         $classement = $temp->fetchAll(PDO::FETCH_ASSOC);
         ?>
         <div class="row justify-content-center align-items-center my-5 w-100">
             <p class="classement text-center">🏆 Classement</p>
-                <div class="text-white p-3 m-0" id="classement">
+                <div class="p-3 m-0" id="classement">
         <?php 
         $medals = ['🥇', '🥈', '🥉', '4️⃣', '5️⃣'];
         foreach ($classement as $index => $joueur): 
-            $isCurrentUser = $joueur['id'] == $user_id;
+            $isCurrentUser = isset($user_id) && $joueur['id'] == $user_id;
         ?>
             <div class="d-flex justify-content-between align-items-center p-2 mb-2 rounded
                         <?= $isCurrentUser ? 'border border-warning' : '' ?>">
