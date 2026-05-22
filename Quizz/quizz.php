@@ -117,7 +117,7 @@ $seconds = $cooldown_db - $seconds_db;
     <?php foreach ($questions as $row_question) { ?>
         <section class="section" id="<?= $q ?>">
 
-            <p><?= htmlspecialchars($row_question["question"]) ?></p>
+            <form action="" method="post" class="quizz_form">
 
             <?php for ($i = 1; $i <= 4; $i++) { ?>
                 <p>
@@ -142,7 +142,12 @@ $seconds = $cooldown_db - $seconds_db;
 
     
 
+<<<<<<< HEAD
         <section class="section" id="terminer">
+=======
+    <section class="section" id="terminer">
+        <form action="" method="post" class="quizz_form">
+>>>>>>> 024e711a2b864f0db94d1f457ade0a9b63bf517d
             <h2>Tu as répondu à toutes les questions ! 🎉</h2>
             <p>Vérifie bien tes réponses avant de valider, tu ne pourras plus les modifier.</p>
             <input type="hidden" name="end" value="yes">
@@ -151,9 +156,19 @@ $seconds = $cooldown_db - $seconds_db;
             <input type="hidden" name="date" value="<?= $date ?>">
 
             <button type="submit" id="end_quizz">Terminer le quizz</button>
+<<<<<<< HEAD
         </section>
 
     </form>
+=======
+        </form>
+    </section>
+    
+    <?php // ajouter une variable qui active un show (suivant la dernière réponse remplie) 
+    
+    if(isset($_GET["section"])){ 
+        $section = $_GET['section']; ?>
+>>>>>>> 024e711a2b864f0db94d1f457ade0a9b63bf517d
 
     <?php // affiche la première section au début de la page ?>
     <script>show('1')</script>
