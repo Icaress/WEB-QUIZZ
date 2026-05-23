@@ -88,7 +88,7 @@ $temp->execute();
                         <?php 
                         $medals = ['🥇', '🥈', '🥉', '4️⃣', '5️⃣'];
                         foreach ($classement as $index => $joueur): 
-                            $isCurrentUser = $joueur['id'] == $user_id;
+                            $isCurrentUser = isset($user_id) && $joueur['utilisateur_id'] == $user_id;
                             // Style spécial si c'est l'utilisateur connecté
                             $rowStyle = $isCurrentUser 
                                 ? 'background: linear-gradient(90deg, rgba(255, 193, 7, 0.15), rgba(0,0,0,0)); border: 1px solid #ffc107;' 
