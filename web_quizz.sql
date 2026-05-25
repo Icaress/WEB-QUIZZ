@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le : lun. 18 mai 2026 à 22:01
+-- Généré le : ven. 22 mai 2026 à 09:43
 -- Version du serveur : 10.4.32-MariaDB
 -- Version de PHP : 8.2.12
 
@@ -14,7 +14,6 @@ SET time_zone = "+00:00";
 DROP DATABASE IF EXISTS `web_quizz`;
 CREATE DATABASE `web_quizz`;
 USE `web_quizz`;
-
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -208,7 +207,12 @@ INSERT INTO `questions_en_cours` (`id`, `tentative_id`, `id_1`, `id_2`, `id_3`, 
 (38, 83, 19, 9, 16, 14, 22, 2, 25, 7, 15, 8),
 (39, 85, 21, 11, 24, 22, 13, 16, 19, 9, 7, 15),
 (41, 88, 10, 7, 9, 15, 3, 20, 25, 19, 16, 12),
-(43, 90, 11, 3, 10, 25, 12, 19, 17, 24, 5, 8);
+(43, 90, 11, 3, 10, 25, 12, 19, 17, 24, 5, 8),
+(46, 93, 27, 26, 34, 33, 44, 30, 43, 41, 29, 42),
+(47, 94, 20, 7, 16, 17, 15, 1, 14, 18, 11, 10),
+(48, 95, 1, 13, 19, 22, 10, 21, 16, 23, 20, 6),
+(49, 96, 23, 13, 9, 4, 7, 6, 5, 8, 18, 24),
+(50, 97, 4, 21, 8, 24, 6, 5, 11, 18, 7, 13);
 
 -- --------------------------------------------------------
 
@@ -278,7 +282,15 @@ INSERT INTO `reponses` (`id`, `tentative_id`, `question_id`, `reponse_utilisateu
 (76, 41, 12, 1, 1),
 (77, 41, 15, 1, 2),
 (78, 41, 6, 1, 2),
-(79, 41, 7, 1, 4);
+(79, 41, 7, 1, 4),
+(97, 95, 13, 1, 4),
+(98, 95, 22, 1, 4),
+(99, 95, 21, 1, 2),
+(100, 97, 4, 1, 3),
+(101, 99, 1, 1, 2),
+(102, 99, 8, 1, 1),
+(103, 100, 6, 1, 2),
+(104, 100, 25, 1, 3);
 
 -- --------------------------------------------------------
 
@@ -333,15 +345,16 @@ CREATE TABLE `utilisateurs` (
   `prenom` varchar(50) NOT NULL,
   `email` varchar(50) NOT NULL,
   `mot_de_passe` varchar(255) NOT NULL,
-  `role` tinyint(1) NOT NULL DEFAULT 0
+  `role` tinyint(1) NOT NULL DEFAULT 0,
+  `ban` tinyint(1) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Déchargement des données de la table `utilisateurs`
 --
 
-INSERT INTO `utilisateurs` (`id`, `nom`, `prenom`, `email`, `mot_de_passe`, `role`) VALUES
-(2, 'RAKOTOARIVELO', 'Benjatiana', 'hrakotoarivelo75@gmail.com', '$2y$10$g5n6/zF1QNwzKIZmrvH0R.0Nz9dsSFrm1Pq2mvxKZ7itysdxy2vL6', 2);
+INSERT INTO `utilisateurs` (`id`, `nom`, `prenom`, `email`, `mot_de_passe`, `role`, `ban`) VALUES
+(2, 'RAKOTOARIVELO', 'Benjatiana', 'hrakotoarivelo75@gmail.com', '$2y$10$g5n6/zF1QNwzKIZmrvH0R.0Nz9dsSFrm1Pq2mvxKZ7itysdxy2vL6', 2, 0);
 
 --
 -- Index pour les tables déchargées
@@ -403,25 +416,25 @@ ALTER TABLE `questions`
 -- AUTO_INCREMENT pour la table `questions_en_cours`
 --
 ALTER TABLE `questions_en_cours`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=56;
 
 --
 -- AUTO_INCREMENT pour la table `reponses`
 --
 ALTER TABLE `reponses`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=97;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=105;
 
 --
 -- AUTO_INCREMENT pour la table `tentatives`
 --
 ALTER TABLE `tentatives`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=91;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=103;
 
 --
 -- AUTO_INCREMENT pour la table `utilisateurs`
 --
 ALTER TABLE `utilisateurs`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

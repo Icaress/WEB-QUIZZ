@@ -6,6 +6,11 @@ if(isset($_SESSION["id"])){
     $user_id = $_SESSION["id"];
 }
 
+if(isset($_GET["banned"])){
+    echo "<h1 style='color: #ff0000dd;'>The hammer of justice has fallen on you !!!</h1>
+            <h4 style='color: #ff0000dd;'>You are still banned from doing any quizz ... Please behave well when it will be lifted :)</h4>";
+}
+
 $categories = $db->query("SELECT * FROM `catégorie`")->fetchAll(PDO::FETCH_ASSOC);
 
 $nb_users    = $db->query("SELECT COUNT(*) as total FROM utilisateurs")->fetch(PDO::FETCH_ASSOC)['total'];
@@ -49,23 +54,87 @@ $nb_categories = $db->query("SELECT COUNT(*) as total FROM catégorie")->fetch(P
                 <button onclick="show('QUIZZ')" class="btn">Commencer le quiz</button>
         </div>
 
-            <div class="info">
-                <div> <p class="big"><?= $nb_questions ?></p> <p>questions</p> </div>
-                <div> <p class="big"><?= $nb_users?></p> <p>Joueurs</p> </div>
-                <div> <p class="big"><?= $nb_categories?></p> <p>Catégories</p> </div>
-            </div>
+        <div class="info">
+            <div> <p class="big"><?= $nb_questions ?></p> <p>questions</p> </div>
+            <div> <p class="big"><?= $nb_users?></p> <p>Joueurs</p> </div>
+            <div> <p class="big"><?= $nb_categories?></p> <p>Catégories</p> </div>
+        </div>
+        <?php
+        $temp = $db->prepare("SELECT utilisateurs.nom, 
+                                    utilisateurs.id AS utilisateur_id,
+                                    COUNT(*) AS total_tentatives,
+                                    AVG(tentatives.score) AS avg_score,
+                                    MAX(tentatives.score) AS max_score
+                            FROM tentatives
+                            JOIN utilisateurs ON utilisateurs.id = tentatives.utilisateur_id
+                            GROUP BY tentatives.utilisateur_id, utilisateurs.nom, utilisateurs.id
+                            ORDER BY avg_score DESC
+                            LIMIT 5
+        ");
+$temp->execute();
+        $classement = $temp->fetchAll(PDO::FETCH_ASSOC);
+        ?>
 
-            <div class="row justify-content-center align-items-center my-5 w-100">
-                <p class="classement text-center">🏆 Classement</p>
-                <div class="bg-dark text-white p-3 m-0" id="classement">
-                    <p class="d-flex justify-content-between">
-                        1 &emsp; Alex L. 
-                        <span>9 840 pts</span>
-                    </p>
+        <div class="row justify-content-center my-5 w-100 m-0">
+            <div class="col-15 col-md-8 col-lg-10">
+                <div class="card bg-border text-white border-secondary shadow-lg rounded-4 overflow-hidden">
+                    
+                    <div class="card-header border-secondary bg-gradient p-3 text-center" style="background-color: #868686;">
+                        <h3 class="m-0 fw-bold tracking-wide" style="font-size: 1.6rem; color: #ffc107;">🏆 Classement Top 5</h3>
+                        <p class="text-muted small m-0 mt-1">Les meilleurs joueurs selon leur moyenne de points</p>
+                    </div>
+
+                    <div class="card-body p-3" style="background-color: #858585;">
+                        <?php 
+                        $medals = ['🥇', '🥈', '🥉', '4️⃣', '5️⃣'];
+                        foreach ($classement as $index => $joueur): 
+                            $isCurrentUser = $joueur['id'] == $user_id;
+                            // Style spécial si c'est l'utilisateur connecté
+                            $rowStyle = $isCurrentUser 
+                                ? 'background: linear-gradient(90deg, rgba(255, 193, 7, 0.15), rgba(0,0,0,0)); border: 1px solid #ffc107;' 
+                                : 'background: #878787; border: 1px solid #2d2d2d;';
+                        ?>
+                            <div class="d-flex justify-content-between align-items-center p-3 mb-2 rounded-3 shadow-sm transition-all" 
+                                 style="<?= $rowStyle ?>">
+                                
+                                <div class="d-flex align-items-center">
+                                    <span class="fs-4 me-3" style="min-width: 30px; text-align: center;"><?= $medals[$index] ?></span>
+                                    <div>
+                                        <span class="fw-semibold <?= $isCurrentUser ? 'text-warning fs-5' : 'text-light' ?>">
+                                            <?= htmlspecialchars($joueur['nom']) ?>
+                                        </span>
+                                        <?php if ($isCurrentUser): ?>
+                                            <span class="badge bg-warning text-dark ms-1" style="font-size: 0.65rem; vertical-align: middle;">VOUS</span>
+                                        <?php endif; ?>
+                                        <div class="text-muted" style="font-size: 0.75rem;">
+                                            <?= $joueur['total_tentatives'] ?> tentative<?= $joueur['total_tentatives'] > 1 ? 's' : '' ?>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="text-end">
+                                    <div class="fw-bold text-warning fs-5">
+                                        <?= number_format($joueur['avg_score'], 1) ?> <span class="small fw-normal text-muted" style="font-size: 0.8rem;">pts moy.</span>
+                                    </div>
+                                    <div class="text-muted" style="font-size: 0.7rem;">
+                                        Record : <span class="text-success fw-bold"><?= $joueur['max_score'] ?>/10</span>
+                                    </div>
+                                </div>
+
+                            </div>
+                        <?php endforeach; ?>
+
+                        <?php if (empty($classement)): ?>
+                            <div class="text-center py-4">
+                                <p class="text-muted m-0">Aucun résultat enregistré pour le moment. Soyez le premier ! 🚀</p>
+                            </div>
+                        <?php endif; ?>
+                    </div>
+
                 </div>
             </div>
-
         </div>
+
     </section>
 
     <?php //Quizz ?>

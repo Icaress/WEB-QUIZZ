@@ -60,22 +60,22 @@ input[type="radio"] + label:hover {
     background-color: #aaa;
 }
 
-button[type="submit"] {
-    margin-top: 3%;
-    padding: 12px 40px;
-    border-radius: 8px;
-    background-color: #595959;
-    color: white;
-    cursor: pointer;
-    font-size: 16px;
-    transition: all 0.3s;
+button[type="submit"], button[type="button"] {
+    margin-top: 3% !important; 
+    padding: 12px 40px !important;
+    border-radius: 8px !important;
+    background-color: #595959 !important;
+    color: white !important;
+    cursor: pointer !important;
+    font-size: 16px !important;
+    transition: all 0.3s !important;
 }
 
-button[type="submit"]:hover {
+
+button[type="submit"]:hover, button[type="button"]:hover {
     background-color: white;
     color: #000;
 }
-
 
 #terminer form h2{
     margin-top: 10%;

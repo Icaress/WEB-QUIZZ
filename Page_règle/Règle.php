@@ -1,12 +1,30 @@
 <?php
+
+require_once "../Configuration/config.php";
+require_once "../Configuration/Ban_verif.php";
+
 // Récupérer l'id de catégorie passé en GET
 $catégorie = $_GET['catégorie'] ?? null;
+
 
 if (!$catégorie) {
     // Rediriger si pas de catégorie
     header('Location: ../Page_accueil/Accueil.php');
     exit;
 }
+
+$stmt = $db->prepare("SELECT nom FROM catégorie WHERE id = ?");
+$stmt->execute([$catégorie]);
+$resultat = $stmt->fetch(PDO::FETCH_ASSOC);
+
+// Si la catégorie n'existe pas dans la BDD, on peut aussi rediriger par sécurité
+if (!$resultat) {
+    header('Location: ../Page_accueil/Accueil.php');
+    exit;
+}
+
+$nom_categorie = $resultat['nom'];
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -18,7 +36,7 @@ if (!$catégorie) {
     <script src="../Fonction/show.js"></script>
     <script src="Règle.js"></script>
     <link rel="stylesheet" href="règle.css">
-    <title>Règle</title>
+    <title>Règle- <?= htmlspecialchars($nom_categorie) ?></title>
 </head>
 <header>
     <div class="d-flex align-items-center justify-content-between p-3">
@@ -32,8 +50,8 @@ if (!$catégorie) {
 <body>
     <section class='section' id="Présentation">
         <div class="text-center m-3 p-4 rounded-5" id="desc">
-            <p class="p1">"Catégorie nom"</p>
-            <p class="p2">Vous allez commencer le Quizz "Catégorie nom". Veuillez noter les règles qui vont être prescrit dans un instant après le bouton.</p>
+            <p class="p1"><?= htmlspecialchars($nom_categorie) ?></p>
+            <p class="p2">Vous allez commencer le Quizz <?= htmlspecialchars($nom_categorie) ?>. Veuillez noter les règles qui vont être prescrit dans un instant après le bouton.</p>
             <button onclick="show('Règle')" class="btn">Préparez-vous</button>
         </div>
     </section>
