@@ -11,7 +11,7 @@ $utilisateur_id = $_SESSION["id"];
 
 
 // Ici, création d'une nouvelle tentative
-if(isset($_GET["catégorie"])){ 
+if(isset($_GET["catégorie"]) && !isset($_POST["end"])){ 
     $catégorie = $_GET["catégorie"];
     
     $date = (new DateTime())->format('Y-m-d H:i:s');
