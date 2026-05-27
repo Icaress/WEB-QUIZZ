@@ -201,6 +201,7 @@ $temp->execute();
                                 JOIN reponses ON reponses.tentative_id = tentatives.id
                                 JOIN questions ON questions.id = reponses.question_id
                                 WHERE utilisateur_id = ?
+                                ORDER BY tentatives.date DESC
                                 ");
         $temp->execute([$user_id]);
         $resultats = $temp->fetchAll();
