@@ -4,6 +4,19 @@ require_once "../Configuration/config.php";
 
 if(isset($_SESSION["id"])){
     $user_id = $_SESSION["id"];
+
+    // Supprime les tentatives invalides
+    // Supprimer les tentatives sans score (+ leurs réponses si elles existent)
+    $tmp = $db->prepare("SELECT id FROM tentatives WHERE score IS NULL AND utilisateur_id=?");
+    $tmp->execute([$_SESSION["id"]]);
+    $ids = $tmp->fetchAll(PDO::FETCH_COLUMN);
+
+    foreach($ids as $id) {
+        $db->prepare("DELETE t, r FROM tentatives t LEFT JOIN reponses r ON t.id = r.tentative_id WHERE t.id = ?")->execute([$id]);
+    }
+
+    // Supprimer les réponses sans tentative associée
+    $db->query("DELETE r FROM reponses r LEFT JOIN tentatives t ON r.tentative_id = t.id WHERE t.id IS NULL");
 }
 
 if(isset($_GET["banned"])){
@@ -16,19 +29,6 @@ $categories = $db->query("SELECT * FROM `catégorie`")->fetchAll(PDO::FETCH_ASSO
 $nb_users    = $db->query("SELECT COUNT(*) as total FROM utilisateurs")->fetch(PDO::FETCH_ASSOC)['total'];
 $nb_questions = $db->query("SELECT COUNT(*) as total FROM questions")->fetch(PDO::FETCH_ASSOC)['total'];
 $nb_categories = $db->query("SELECT COUNT(*) as total FROM catégorie")->fetch(PDO::FETCH_ASSOC)['total'];
-
-// Supprime les tentatives invalides
-// Supprimer les tentatives sans score (+ leurs réponses si elles existent)
-$tmp = $db->prepare("SELECT id FROM tentatives WHERE score IS NULL AND utilisateur_id=?");
-$tmp->execute([$_SESSION["id"]]);
-$ids = $tmp->fetchAll(PDO::FETCH_COLUMN);
-
-foreach($ids as $id) {
-    $db->prepare("DELETE t, r FROM tentatives t LEFT JOIN reponses r ON t.id = r.tentative_id WHERE t.id = ?")->execute([$id]);
-}
-
-// Supprimer les réponses sans tentative associée
-$db->query("DELETE r FROM reponses r LEFT JOIN tentatives t ON r.tentative_id = t.id WHERE t.id IS NULL");
 
 ?>
 
