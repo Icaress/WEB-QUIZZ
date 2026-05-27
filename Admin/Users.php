@@ -63,8 +63,8 @@ $utilisateurs = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 <td><?= htmlspecialchars($user["prenom"]) ?></td>
                 <td><?= htmlspecialchars($user["email"]) ?></td>
                 <td>
-                    <span class="<?= $user["role"] == 2 ? 'role-admin' : 'role-user' ?>">
-                        <?= $user["role"] == 2 ? "Admin" : "Utilisateur" ?>
+                    <span class="<?= $user["role"] >=1 ? 'role-admin' : 'role-user' ?>">
+                        <?= $user["role"] >= 1 ? "Admin" : "Utilisateur" ?>
                     </span>
                 </td>
 
@@ -78,7 +78,6 @@ $utilisateurs = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     </a>
                 </td>
 
-                <?php // WTF is this dude <(＿　＿)>?>
                 <td>
                     <a href="?supprimer=<?= $user["id"] ?>" 
                        onclick="return confirm('Supprimer <?= htmlspecialchars($user["prenom"]) ?> <?= htmlspecialchars($user["nom"]) ?> ?')">

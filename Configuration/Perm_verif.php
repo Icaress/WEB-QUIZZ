@@ -11,4 +11,4 @@ else {
     header("Location: ../Page_accueil/Accueil.php");
     exit();
 }
-?>
+
