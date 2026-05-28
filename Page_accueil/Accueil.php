@@ -21,7 +21,7 @@ if(isset($_SESSION["id"])){
 
 if(isset($_GET["banned"])){
     echo "<h1 style='color: #ff0000dd;'>The hammer of justice has fallen on you !!!</h1>
-            <h4 style='color: #ff0000dd;'>You are still banned from doing any quizz ... Please behave well when it will be lifted :)</h4>";
+            <h4 style='color: #ff0000dd;'>You are still banned from doing any quizz ... Behave well when it will be lifted :)</h4>";
 }
 
 $categories = $db->query("SELECT * FROM `catégorie`")->fetchAll(PDO::FETCH_ASSOC);

@@ -42,6 +42,9 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
             <input type="time" name="cooldown" step="1" id="cooldown">
             <button type="submit">Confirm</button>
         </form>
+
+        <a href="Admin_panel.php" class="btn btn-outline-secondary mt-4" id="admin">Admin panel</a>
+
     </div>
 
 </body>
