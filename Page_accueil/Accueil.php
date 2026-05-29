@@ -93,12 +93,12 @@ $temp->execute();
             <div class="col-15 col-md-8 col-lg-10">
                 <div class="card bg-border text-white border-secondary shadow-lg rounded-4 overflow-hidden">
                     
-                    <div class="card-header border-secondary bg-gradient p-3 text-center" style="background-color: #868686;">
+                    <div class="card-header border-secondary bg-gradient p-3 text-center" style="background-color: #D9D9D9;">
                         <h3 class="m-0 fw-bold tracking-wide" style="font-size: 1.6rem; color: #ffc107;">🏆 Classement Top 5</h3>
                         <p class="text-muted small m-0 mt-1">Les meilleurs joueurs selon leur moyenne de points</p>
                     </div>
 
-                    <div class="card-body p-3" style="background-color: #858585;">
+                    <div class="card-body p-3" style="background-color: #D9D9D9;">
                         <?php 
                         $medals = ['🥇', '🥈', '🥉', '4️⃣', '5️⃣'];
                         foreach ($classement as $index => $joueur): 
@@ -106,7 +106,7 @@ $temp->execute();
                             // Style spécial si c'est l'utilisateur connecté
                             $rowStyle = $isCurrentUser 
                                 ? 'background: linear-gradient(90deg, rgba(255, 193, 7, 0.15), rgba(0,0,0,0)); border: 1px solid #ffc107;' 
-                                : 'background: #878787; border: 1px solid #2d2d2d;';
+                                : 'background: #D9D9D9; border: 1px solid #2d2d2d;';
                         ?>
                             <div class="d-flex justify-content-between align-items-center p-3 mb-2 rounded-3 shadow-sm transition-all" 
                                  style="<?= $rowStyle ?>">
