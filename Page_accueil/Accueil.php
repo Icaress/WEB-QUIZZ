@@ -4,11 +4,24 @@ require_once "../Configuration/config.php";
 
 if(isset($_SESSION["id"])){
     $user_id = $_SESSION["id"];
+
+    // Supprime les tentatives invalides
+    // Supprimer les tentatives sans score (+ leurs réponses si elles existent)
+    $tmp = $db->prepare("SELECT id FROM tentatives WHERE score IS NULL AND utilisateur_id=?");
+    $tmp->execute([$_SESSION["id"]]);
+    $ids = $tmp->fetchAll(PDO::FETCH_COLUMN);
+
+    foreach($ids as $id) {
+        $db->prepare("DELETE t, r FROM tentatives t LEFT JOIN reponses r ON t.id = r.tentative_id WHERE t.id = ?")->execute([$id]);
+    }
+
+    // Supprimer les réponses sans tentative associée
+    $db->query("DELETE r FROM reponses r LEFT JOIN tentatives t ON r.tentative_id = t.id WHERE t.id IS NULL");
 }
 
 if(isset($_GET["banned"])){
     echo "<h1 style='color: #ff0000dd;'>The hammer of justice has fallen on you !!!</h1>
-            <h4 style='color: #ff0000dd;'>You are still banned from doing any quizz ... Please behave well when it will be lifted :)</h4>";
+            <h4 style='color: #ff0000dd;'>You are still banned from doing any quizz ... Behave well when it will be lifted :)</h4>";
 }
 
 $categories = $db->query("SELECT * FROM `catégorie`")->fetchAll(PDO::FETCH_ASSOC);
@@ -16,6 +29,7 @@ $categories = $db->query("SELECT * FROM `catégorie`")->fetchAll(PDO::FETCH_ASSO
 $nb_users    = $db->query("SELECT COUNT(*) as total FROM utilisateurs")->fetch(PDO::FETCH_ASSOC)['total'];
 $nb_questions = $db->query("SELECT COUNT(*) as total FROM questions")->fetch(PDO::FETCH_ASSOC)['total'];
 $nb_categories = $db->query("SELECT COUNT(*) as total FROM catégorie")->fetch(PDO::FETCH_ASSOC)['total'];
+
 ?>
 
 <!DOCTYPE html>
@@ -79,12 +93,12 @@ $temp->execute();
             <div class="col-15 col-md-8 col-lg-10">
                 <div class="card bg-border text-white border-secondary shadow-lg rounded-4 overflow-hidden">
                     
-                    <div class="card-header border-secondary bg-gradient p-3 text-center" style="background-color: #868686;">
+                    <div class="card-header border-secondary bg-gradient p-3 text-center" style="background-color: #D9D9D9;">
                         <h3 class="m-0 fw-bold tracking-wide" style="font-size: 1.6rem; color: #ffc107;">🏆 Classement Top 5</h3>
                         <p class="text-muted small m-0 mt-1">Les meilleurs joueurs selon leur moyenne de points</p>
                     </div>
 
-                    <div class="card-body p-3" style="background-color: #858585;">
+                    <div class="card-body p-3" style="background-color: #D9D9D9;">
                         <?php 
                         $medals = ['🥇', '🥈', '🥉', '4️⃣', '5️⃣'];
                         foreach ($classement as $index => $joueur): 
@@ -92,7 +106,7 @@ $temp->execute();
                             // Style spécial si c'est l'utilisateur connecté
                             $rowStyle = $isCurrentUser 
                                 ? 'background: linear-gradient(90deg, rgba(255, 193, 7, 0.15), rgba(0,0,0,0)); border: 1px solid #ffc107;' 
-                                : 'background: #878787; border: 1px solid #2d2d2d;';
+                                : 'background: #D9D9D9; border: 1px solid #2d2d2d;';
                         ?>
                             <div class="d-flex justify-content-between align-items-center p-3 mb-2 rounded-3 shadow-sm transition-all" 
                                  style="<?= $rowStyle ?>">
@@ -187,6 +201,7 @@ $temp->execute();
                                 JOIN reponses ON reponses.tentative_id = tentatives.id
                                 JOIN questions ON questions.id = reponses.question_id
                                 WHERE utilisateur_id = ?
+                                ORDER BY tentatives.date DESC
                                 ");
         $temp->execute([$user_id]);
         $resultats = $temp->fetchAll();

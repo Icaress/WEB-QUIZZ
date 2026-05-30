@@ -18,5 +18,3 @@ try {
 
 //ON APPEL CE CODE AVEC LA COMMANDE : require_once "config.php"; comme dans le login.php
 
-?>
-

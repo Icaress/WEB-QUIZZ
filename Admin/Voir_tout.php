@@ -17,6 +17,8 @@ if(isset($_POST['delete'])){
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Toutes les catégories et questions</title>
     <link rel="stylesheet" href="Voir_tout.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
 </head>
 <body>
     <form method="GET">
@@ -37,7 +39,7 @@ if(isset($_POST['delete'])){
     ?>
     <?php foreach($questions as $q): ?>
         <details>
-            <summary><?= $q['question'] ?></summary>
+            <summary><?= htmlspecialchars($q['question']) ?></summary>
             <p>Réponse 1 : <?= htmlspecialchars($q['reponse1']) ?></p>
             <p>Réponse 2 : <?= htmlspecialchars($q['reponse2']) ?></p>
             <p>Réponse 3 : <?= htmlspecialchars($q['reponse3']) ?></p>
@@ -55,5 +57,8 @@ if(isset($_POST['delete'])){
 
     <?php endforeach; ?>
 <?php endif; ?>
+
+<a href="Admin_panel.php" class="btn btn-outline-secondary" id="admin">Admin panel</a>
+
 </body>
 </html>

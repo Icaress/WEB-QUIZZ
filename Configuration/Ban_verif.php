@@ -9,5 +9,3 @@ if(isset($_SESSION["ban"])){
     header("Location: ../Page_accueil/Accueil.php");
     exit();
 }
-
-?>

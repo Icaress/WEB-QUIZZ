@@ -126,3 +126,10 @@ a {
 a:hover {
     opacity: 0.85;
 }
+
+#admin {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  margin-top: 1rem;
+}

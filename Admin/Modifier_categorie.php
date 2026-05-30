@@ -23,6 +23,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     <link rel="stylesheet" href="Modifier_categorie.css">
     <script src='Modifier_categorie.js' defer></script>
     <title>Renommer une catégorie</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
 </head>
 <body>
     <form action="Modifier_categorie.php" method="POST">
@@ -38,6 +40,10 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             <input type="text" name="Rename" placeholder='Renommer la catégorie sélectionner' required>
         </div>
         <input type="submit" value="Renommer">
+
+        <a href="Admin_panel.php" class="btn btn-outline-secondary" id="admin">Admin panel</a>
+
     </form>
+    
 </body>
 </html>

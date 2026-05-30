@@ -103,3 +103,7 @@ tbody tr:hover { background: #fafafa; }
 }
 
 .btn-supprimer:hover { background: #ef4444 !important ; }
+
+#admin {
+    margin-top: 1rem;
+}

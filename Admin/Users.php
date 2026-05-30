@@ -38,6 +38,8 @@ $utilisateurs = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <meta charset="UTF-8">
     <title>Gestion des utilisateurs</title>
     <link rel="stylesheet" href="Users.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
 </head>
 <body>
 
@@ -63,8 +65,8 @@ $utilisateurs = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 <td><?= htmlspecialchars($user["prenom"]) ?></td>
                 <td><?= htmlspecialchars($user["email"]) ?></td>
                 <td>
-                    <span class="<?= $user["role"] == 2 ? 'role-admin' : 'role-user' ?>">
-                        <?= $user["role"] == 2 ? "Admin" : "Utilisateur" ?>
+                    <span class="<?= $user["role"] >=1 ? 'role-admin' : 'role-user' ?>">
+                        <?= $user["role"] >= 1 ? "Admin" : "Utilisateur" ?>
                     </span>
                 </td>
 
@@ -78,7 +80,6 @@ $utilisateurs = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     </a>
                 </td>
 
-                <?php // WTF is this dude <(＿　＿)>?>
                 <td>
                     <a href="?supprimer=<?= $user["id"] ?>" 
                        onclick="return confirm('Supprimer <?= htmlspecialchars($user["prenom"]) ?> <?= htmlspecialchars($user["nom"]) ?> ?')">
@@ -89,6 +90,8 @@ $utilisateurs = $stmt->fetchAll(PDO::FETCH_ASSOC);
         <?php } ?>
     </tbody>
 </table>
+
+<a href="Admin_panel.php" class="btn btn-outline-secondary" id="admin">Admin panel</a>
 
 </body>
 </html>

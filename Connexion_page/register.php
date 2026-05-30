@@ -47,7 +47,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
 
         /*rule_symbol*/
-        if(!preg_match('/[&?#\/*%]/',$mdp)){
+        if(!preg_match('/[&?#\/*%|:;,.=+-@{}[]!]/',$mdp)){
             $wrong .= "• The password doesn't have any of the required symbols : &emsp; & ? # \ / * % <br>";
         }
 
